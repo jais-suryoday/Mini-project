@@ -6,6 +6,8 @@ import {
   Clock,
   MapPin,
   Activity,
+  Video,
+  VideoOff,
 } from 'lucide-react'
 import { useOccupancySocket } from './useOccupancySocket'
 
@@ -13,6 +15,9 @@ import { useOccupancySocket } from './useOccupancySocket'
 // In dev, the Vite proxy forwards /ws → ws://localhost:8000/ws.
 // In production, point this to your deployed backend.
 const WS_URL = `ws://${window.location.host}/ws`
+
+// ── MJPEG stream URL (proxied through Vite in dev) ──────────────
+const VIDEO_FEED_URL = '/video_feed'
 
 // ── Helpers ──────────────────────────────────────────────────────
 function getStatus(occupancy, total) {
@@ -41,7 +46,7 @@ function formatDate(date) {
 }
 
 // ── Ring Progress Component ──────────────────────────────────────
-function RingProgress({ value, max, size = 220, strokeWidth = 10 }) {
+function RingProgress({ value, max, size = 180, strokeWidth = 10 }) {
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const ratio = Math.min(value / max, 1)
@@ -79,13 +84,13 @@ function RingProgress({ value, max, size = 220, strokeWidth = 10 }) {
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span
           key={value}
-          className="animate-fade-up text-5xl font-black tracking-tight"
+          className="animate-fade-up text-4xl font-black tracking-tight"
           style={{ color: 'var(--color-text-primary)' }}
         >
           {value}
         </span>
         <span
-          className="text-sm font-medium tracking-wide uppercase"
+          className="text-xs font-medium tracking-wide uppercase"
           style={{ color: 'var(--color-text-tertiary)' }}
         >
           of {max}
@@ -113,6 +118,61 @@ function ConnectionBadge({ status }) {
   )
 }
 
+// ── Live Video Feed ──────────────────────────────────────────────
+function LiveVideoFeed() {
+  const [hasError, setHasError] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  return (
+    <div className="video-feed-container">
+      {/* Header bar */}
+      <div className="video-feed-header">
+        <div className="flex items-center gap-2">
+          {hasError ? <VideoOff size={14} /> : <Video size={14} />}
+          <span>Live Camera Feed</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span
+            className="animate-pulse-dot inline-block h-2 w-2 rounded-full"
+            style={{ backgroundColor: hasError ? 'var(--color-accent-red)' : 'var(--color-accent-green)' }}
+          />
+          <span>{hasError ? 'Offline' : 'Recording'}</span>
+        </div>
+      </div>
+
+      {/* Video frame */}
+      <div className="video-feed-frame">
+        {isLoading && !hasError && (
+          <div className="video-feed-placeholder">
+            <Video size={40} style={{ color: 'var(--color-text-tertiary)', opacity: 0.5 }} />
+            <span>Connecting to camera…</span>
+          </div>
+        )}
+        {hasError && (
+          <div className="video-feed-placeholder">
+            <VideoOff size={40} style={{ color: 'var(--color-accent-red)', opacity: 0.6 }} />
+            <span>Camera feed unavailable</span>
+            <button
+              className="video-feed-retry"
+              onClick={() => { setHasError(false); setIsLoading(true) }}
+            >
+              Retry
+            </button>
+          </div>
+        )}
+        <img
+          src={VIDEO_FEED_URL}
+          alt="Live camera feed with person detection"
+          className="video-feed-img"
+          style={{ display: hasError ? 'none' : 'block' }}
+          onLoad={() => setIsLoading(false)}
+          onError={() => { setHasError(true); setIsLoading(false) }}
+        />
+      </div>
+    </div>
+  )
+}
+
 // ── Dashboard ────────────────────────────────────────────────────
 export default function Dashboard() {
   const { data, status: wsStatus } = useOccupancySocket(WS_URL)
@@ -131,88 +191,101 @@ export default function Dashboard() {
   const percentage = Math.round((occupancy / totalSeats) * 100)
 
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-between px-6 py-10">
+    <div className="dashboard-root">
 
       {/* ── Top bar ──────────────────────────────────────────── */}
-      <header className="flex w-full max-w-xl items-center justify-between">
-        <ConnectionBadge status={wsStatus} />
-        <div className="flex items-center gap-1.5 text-xs font-medium"
-             style={{ color: 'var(--color-text-tertiary)' }}>
-          <Activity size={13} />
-          <span>AI Vision</span>
+      <header className="dashboard-header">
+        <div className="flex items-center gap-2">
+          <Activity size={16} style={{ color: 'var(--color-accent-green)' }} />
+          <h1 className="text-base font-bold tracking-tight"
+              style={{ color: 'var(--color-text-primary)' }}>
+            Library Occupancy Tracker
+          </h1>
         </div>
-      </header>
-
-      {/* ── Main content ─────────────────────────────────────── */}
-      <main className="flex flex-col items-center gap-8">
-
-        {/* Zone & time */}
-        <div className="flex flex-col items-center gap-1">
-          <div className="flex items-center gap-2">
-            <MapPin size={16} style={{ color: 'var(--color-text-tertiary)' }} />
-            <h1 className="text-lg font-semibold tracking-tight"
-                style={{ color: 'var(--color-text-primary)' }}>
-              {zone}
-            </h1>
-          </div>
+        <div className="flex items-center gap-4">
           <div className="flex items-center gap-1.5 text-xs"
                style={{ color: 'var(--color-text-tertiary)' }}>
             <Clock size={12} />
             <time>{formatTime(now)}</time>
           </div>
+          <ConnectionBadge status={wsStatus} />
         </div>
+      </header>
 
-        {/* Ring progress */}
-        <RingProgress value={occupancy} max={totalSeats} />
+      {/* ── Main content — two-panel layout ───────────────────── */}
+      <main className="dashboard-main">
 
-        {/* Fraction label */}
-        <p className="text-center text-sm font-medium tracking-wide"
-           style={{ color: 'var(--color-text-secondary)' }}>
-          <span className="font-bold" style={{ color: 'var(--color-text-primary)' }}>
-            {occupancy}
-          </span>
-          {' / '}
-          {totalSeats} Seats Occupied
-        </p>
+        {/* Left: Live video feed */}
+        <section className="dashboard-panel-video">
+          <LiveVideoFeed />
+        </section>
 
-        {/* Status pill */}
-        <div
-          className="rounded-full px-5 py-1.5 text-xs font-bold uppercase tracking-widest"
-          style={{
-            backgroundColor: occupancyStatus.color + '12',
-            color: occupancyStatus.color,
-          }}
-        >
-          {occupancyStatus.label}
-        </div>
-
-        {/* Capacity bar */}
-        <div className="w-64">
-          <div className="flex items-center justify-between text-xs font-medium mb-1.5"
-               style={{ color: 'var(--color-text-tertiary)' }}>
-            <span>Capacity</span>
-            <span>{percentage}%</span>
+        {/* Right: Occupancy stats */}
+        <section className="dashboard-panel-stats">
+          {/* Zone & date */}
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center gap-2">
+              <MapPin size={16} style={{ color: 'var(--color-text-tertiary)' }} />
+              <h2 className="text-lg font-semibold tracking-tight"
+                  style={{ color: 'var(--color-text-primary)' }}>
+                {zone}
+              </h2>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs"
+                 style={{ color: 'var(--color-text-tertiary)' }}>
+              <Users size={12} />
+              <span>{formatDate(now)}</span>
+            </div>
           </div>
-          <div className="h-1.5 w-full rounded-full overflow-hidden"
-               style={{ backgroundColor: 'var(--color-border)' }}>
-            <div
-              className="h-full rounded-full transition-all duration-700 ease-out"
-              style={{
-                width: `${Math.min(percentage, 100)}%`,
-                backgroundColor: occupancyStatus.color,
-              }}
-            />
+
+          {/* Ring progress */}
+          <RingProgress value={occupancy} max={totalSeats} />
+
+          {/* Fraction label */}
+          <p className="text-center text-sm font-medium tracking-wide"
+             style={{ color: 'var(--color-text-secondary)' }}>
+            <span className="font-bold" style={{ color: 'var(--color-text-primary)' }}>
+              {occupancy}
+            </span>
+            {' / '}
+            {totalSeats} Seats Occupied
+          </p>
+
+          {/* Status pill */}
+          <div
+            className="rounded-full px-5 py-1.5 text-xs font-bold uppercase tracking-widest"
+            style={{
+              backgroundColor: occupancyStatus.color + '18',
+              color: occupancyStatus.color,
+              border: `1px solid ${occupancyStatus.color}30`,
+            }}
+          >
+            {occupancyStatus.label}
           </div>
-        </div>
+
+          {/* Capacity bar */}
+          <div className="w-full max-w-xs">
+            <div className="flex items-center justify-between text-xs font-medium mb-1.5"
+                 style={{ color: 'var(--color-text-tertiary)' }}>
+              <span>Capacity</span>
+              <span>{percentage}%</span>
+            </div>
+            <div className="h-2 w-full rounded-full overflow-hidden"
+                 style={{ backgroundColor: 'var(--color-border)' }}>
+              <div
+                className="h-full rounded-full transition-all duration-700 ease-out"
+                style={{
+                  width: `${Math.min(percentage, 100)}%`,
+                  backgroundColor: occupancyStatus.color,
+                }}
+              />
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* ── Footer ───────────────────────────────────────────── */}
-      <footer className="flex w-full max-w-xl flex-col items-center gap-2">
-        <div className="flex items-center gap-2 text-xs"
-             style={{ color: 'var(--color-text-tertiary)' }}>
-          <Users size={13} />
-          <span>{formatDate(now)}</span>
-        </div>
+      <footer className="dashboard-footer">
         <p className="text-[10px] font-medium uppercase tracking-widest"
            style={{ color: 'var(--color-text-tertiary)' }}>
           Powered by YOLOv8 · Real-time Computer Vision

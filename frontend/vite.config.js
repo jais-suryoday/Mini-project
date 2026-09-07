@@ -12,6 +12,9 @@ export default defineConfig({
         target: 'ws://localhost:8000',
         ws: true,
       },
+      '/video_feed': {
+        target: 'http://localhost:8000',
+      },
     },
   },
 })
