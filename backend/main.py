@@ -27,7 +27,7 @@ TOTAL_SEATS = 50
 
 # Video source: use 0 for the default webcam.
 # To use a video file instead, change to a path string, e.g.:
-#   VIDEO_SOURCE = "library_feed.mp4"
+#   VIDEO_SOURCE = "test_video.mp4"
 VIDEO_SOURCE = 0
 
 # How often (in seconds) to broadcast occupancy updates.
