@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/* ── Design tokens ─────────────────────────────────────────────── */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f5f5f5;
+  --color-border: #e5e5e5;
+  --color-text-primary: #0a0a0a;
+  --color-text-secondary: #737373;
+  --color-text-tertiary: #a3a3a3;
+  --color-accent-green: #16a34a;
+  --color-accent-amber: #d97706;
+  --color-accent-red: #dc2626;
+}
+
+/* ── Base reset ────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  min-height: 100dvh;
+}
+
+/* ── Ring progress ─────────────────────────────────────────────── */
+.ring-track {
+  stroke: var(--color-border);
+}
+
+.ring-fill {
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              stroke 0.4s ease;
+  transform-origin: center;
+  transform: rotate(-90deg);
+}
+
+/* ── Pulse dot ─────────────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ── Smooth number transition ──────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.35s ease-out;
+}
