@@ -73,11 +73,12 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
-  padding: 2rem 1.5rem;
+  gap: 1.25rem;
+  padding: 1.5rem 1.25rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 12px;
+  overflow-y: auto;
 }
 
 .dashboard-footer {
@@ -158,6 +159,39 @@ body {
   color: white;
 }
 
+/* ── Setup Seats button ───────────────────────────────────────── */
+.setup-seats-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-accent-green);
+  background: transparent;
+  border: 1px solid var(--color-accent-green);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.setup-seats-btn:hover {
+  background: var(--color-accent-green);
+  color: white;
+}
+
+.setup-seats-btn.cancel {
+  color: var(--color-accent-red);
+  border-color: var(--color-accent-red);
+}
+
+.setup-seats-btn.cancel:hover {
+  background: var(--color-accent-red);
+  color: white;
+}
+
 /* ── Ring progress ─────────────────────────────────────────────── */
 .ring-track {
   stroke: var(--color-border);
@@ -188,6 +222,137 @@ body {
 
 .animate-fade-up {
   animation: fade-up 0.35s ease-out;
+}
+
+/* ── Seat Grid ─────────────────────────────────────────────────── */
+.seat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  width: 100%;
+  max-width: 320px;
+}
+
+.seat-grid-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1rem 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+}
+
+.seat-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.seat-chip-vacant {
+  background: rgba(22, 163, 74, 0.08);
+  color: var(--color-accent-green);
+  border: 1px solid rgba(22, 163, 74, 0.2);
+}
+
+.seat-chip-occupied {
+  background: rgba(220, 38, 38, 0.08);
+  color: var(--color-accent-red);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.seat-chip-label {
+  white-space: nowrap;
+}
+
+.seat-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Calibrator ────────────────────────────────────────────────── */
+.calibrator-root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.calibrator-frame {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.calibrator-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.calibrator-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+.calibrator-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.calibrator-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.calibrator-btn:hover:not(:disabled) {
+  background: var(--color-surface-alt);
+  border-color: var(--color-text-tertiary);
+}
+
+.calibrator-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.calibrator-btn.danger {
+  color: var(--color-accent-red);
+  border-color: rgba(220, 38, 38, 0.3);
+}
+
+.calibrator-btn.danger:hover:not(:disabled) {
+  background: rgba(220, 38, 38, 0.06);
+  border-color: var(--color-accent-red);
 }
 
 /* ── Responsive: stack on smaller screens ─────────────────────── */

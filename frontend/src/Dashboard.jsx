@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import {
   Users,
   Wifi,
@@ -8,20 +8,25 @@ import {
   Activity,
   Video,
   VideoOff,
+  Settings,
+  Save,
+  Trash2,
+  X,
+  Armchair,
 } from 'lucide-react'
 import { useOccupancySocket } from './useOccupancySocket'
+import SeatCalibrator from './SeatCalibrator'
 
 // ── WebSocket URL ────────────────────────────────────────────────
-// In dev, the Vite proxy forwards /ws → ws://localhost:8000/ws.
-// In production, point this to your deployed backend.
 const WS_URL = `ws://${window.location.host}/ws`
 
 // ── MJPEG stream URL (proxied through Vite in dev) ──────────────
 const VIDEO_FEED_URL = '/video_feed'
 
 // ── Helpers ──────────────────────────────────────────────────────
-function getStatus(occupancy, total) {
-  const ratio = occupancy / total
+function getStatus(occupied, total) {
+  if (total === 0) return { label: 'No Seats Defined', color: 'var(--color-text-tertiary)' }
+  const ratio = occupied / total
   if (ratio >= 1) return { label: 'Full', color: 'var(--color-accent-red)' }
   if (ratio >= 0.8) return { label: 'Nearing Capacity', color: 'var(--color-accent-amber)' }
   return { label: 'Available', color: 'var(--color-accent-green)' }
@@ -49,7 +54,7 @@ function formatDate(date) {
 function RingProgress({ value, max, size = 180, strokeWidth = 10 }) {
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
-  const ratio = Math.min(value / max, 1)
+  const ratio = max > 0 ? Math.min(value / max, 1) : 0
   const offset = circumference * (1 - ratio)
   const status = getStatus(value, max)
 
@@ -93,7 +98,7 @@ function RingProgress({ value, max, size = 180, strokeWidth = 10 }) {
           className="text-xs font-medium tracking-wide uppercase"
           style={{ color: 'var(--color-text-tertiary)' }}
         >
-          of {max}
+          of {max} seats
         </span>
       </div>
     </div>
@@ -118,8 +123,44 @@ function ConnectionBadge({ status }) {
   )
 }
 
+// ── Seat Status Grid ─────────────────────────────────────────────
+function SeatGrid({ seats }) {
+  if (!seats || seats.length === 0) {
+    return (
+      <div className="seat-grid-empty">
+        <Armchair size={24} style={{ color: 'var(--color-text-tertiary)', opacity: 0.5 }} />
+        <span>No seats configured</span>
+        <span className="text-[10px]">Click "Setup Seats" to define seat zones</span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="seat-grid">
+      {seats.map((seat) => (
+        <div
+          key={seat.id}
+          className={`seat-chip ${seat.occupied ? 'seat-chip-occupied' : 'seat-chip-vacant'}`}
+          title={`${seat.label}: ${seat.occupied ? 'Occupied' : 'Vacant'}`}
+        >
+          <Armchair size={14} />
+          <span className="seat-chip-label">{seat.label}</span>
+          <span
+            className="seat-chip-dot"
+            style={{
+              backgroundColor: seat.occupied
+                ? 'var(--color-accent-red)'
+                : 'var(--color-accent-green)',
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 // ── Live Video Feed ──────────────────────────────────────────────
-function LiveVideoFeed() {
+function LiveVideoFeed({ calibrating, onCalibrate, seats, onSeatsChange }) {
   const [hasError, setHasError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -129,14 +170,28 @@ function LiveVideoFeed() {
       <div className="video-feed-header">
         <div className="flex items-center gap-2">
           {hasError ? <VideoOff size={14} /> : <Video size={14} />}
-          <span>Live Camera Feed</span>
+          <span>{calibrating ? 'Seat Calibration Mode' : 'Live Camera Feed'}</span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <span
-            className="animate-pulse-dot inline-block h-2 w-2 rounded-full"
-            style={{ backgroundColor: hasError ? 'var(--color-accent-red)' : 'var(--color-accent-green)' }}
-          />
-          <span>{hasError ? 'Offline' : 'Recording'}</span>
+        <div className="flex items-center gap-3">
+          {!calibrating && (
+            <button className="setup-seats-btn" onClick={() => onCalibrate(true)}>
+              <Settings size={12} />
+              Setup Seats
+            </button>
+          )}
+          {calibrating && (
+            <button className="setup-seats-btn cancel" onClick={() => onCalibrate(false)}>
+              <X size={12} />
+              Exit Setup
+            </button>
+          )}
+          <div className="flex items-center gap-1.5">
+            <span
+              className="animate-pulse-dot inline-block h-2 w-2 rounded-full"
+              style={{ backgroundColor: hasError ? 'var(--color-accent-red)' : 'var(--color-accent-green)' }}
+            />
+            <span>{hasError ? 'Offline' : 'Recording'}</span>
+          </div>
         </div>
       </div>
 
@@ -160,14 +215,25 @@ function LiveVideoFeed() {
             </button>
           </div>
         )}
-        <img
-          src={VIDEO_FEED_URL}
-          alt="Live camera feed with person detection"
-          className="video-feed-img"
-          style={{ display: hasError ? 'none' : 'block' }}
-          onLoad={() => setIsLoading(false)}
-          onError={() => { setHasError(true); setIsLoading(false) }}
-        />
+
+        {calibrating ? (
+          <SeatCalibrator
+            videoUrl={VIDEO_FEED_URL}
+            seats={seats}
+            onSeatsChange={onSeatsChange}
+            onVideoError={() => { setHasError(true); setIsLoading(false) }}
+            onVideoLoad={() => setIsLoading(false)}
+          />
+        ) : (
+          <img
+            src={VIDEO_FEED_URL}
+            alt="Live camera feed with seat detection"
+            className="video-feed-img"
+            style={{ display: hasError ? 'none' : 'block' }}
+            onLoad={() => setIsLoading(false)}
+            onError={() => { setHasError(true); setIsLoading(false) }}
+          />
+        )}
       </div>
     </div>
   )
@@ -177,6 +243,8 @@ function LiveVideoFeed() {
 export default function Dashboard() {
   const { data, status: wsStatus } = useOccupancySocket(WS_URL)
   const [now, setNow] = useState(new Date())
+  const [calibrating, setCalibrating] = useState(false)
+  const [localSeats, setLocalSeats] = useState([])
 
   // Tick the clock every second.
   useEffect(() => {
@@ -184,11 +252,34 @@ export default function Dashboard() {
     return () => clearInterval(id)
   }, [])
 
-  const occupancy = data?.occupancy ?? 0
-  const totalSeats = data?.total_seats ?? 50
+  // Load saved seats on mount.
+  useEffect(() => {
+    fetch('/seats')
+      .then((r) => r.json())
+      .then((d) => { if (d.seats) setLocalSeats(d.seats) })
+      .catch(() => {})
+  }, [])
+
+  const handleSeatsChange = useCallback(async (newSeats) => {
+    setLocalSeats(newSeats)
+    try {
+      await fetch('/seats', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ seats: newSeats }),
+      })
+    } catch (err) {
+      console.error('[Seats] Failed to save:', err)
+    }
+  }, [])
+
+  const occupiedSeats = data?.occupied_seats ?? 0
+  const totalSeats = data?.total_seats ?? localSeats.length
   const zone = data?.zone ?? 'Main Lab'
-  const occupancyStatus = getStatus(occupancy, totalSeats)
-  const percentage = Math.round((occupancy / totalSeats) * 100)
+  const personCount = data?.person_count ?? 0
+  const seatStatuses = data?.seats ?? localSeats.map((s) => ({ ...s, occupied: false }))
+  const occupancyStatus = getStatus(occupiedSeats, totalSeats)
+  const percentage = totalSeats > 0 ? Math.round((occupiedSeats / totalSeats) * 100) : 0
 
   return (
     <div className="dashboard-root">
@@ -199,7 +290,7 @@ export default function Dashboard() {
           <Activity size={16} style={{ color: 'var(--color-accent-green)' }} />
           <h1 className="text-base font-bold tracking-tight"
               style={{ color: 'var(--color-text-primary)' }}>
-            Library Occupancy Tracker
+            Library Seat Occupancy Tracker
           </h1>
         </div>
         <div className="flex items-center gap-4">
@@ -217,7 +308,12 @@ export default function Dashboard() {
 
         {/* Left: Live video feed */}
         <section className="dashboard-panel-video">
-          <LiveVideoFeed />
+          <LiveVideoFeed
+            calibrating={calibrating}
+            onCalibrate={setCalibrating}
+            seats={localSeats}
+            onSeatsChange={handleSeatsChange}
+          />
         </section>
 
         {/* Right: Occupancy stats */}
@@ -239,17 +335,24 @@ export default function Dashboard() {
           </div>
 
           {/* Ring progress */}
-          <RingProgress value={occupancy} max={totalSeats} />
+          <RingProgress value={occupiedSeats} max={totalSeats} />
 
           {/* Fraction label */}
           <p className="text-center text-sm font-medium tracking-wide"
              style={{ color: 'var(--color-text-secondary)' }}>
             <span className="font-bold" style={{ color: 'var(--color-text-primary)' }}>
-              {occupancy}
+              {occupiedSeats}
             </span>
             {' / '}
             {totalSeats} Seats Occupied
           </p>
+
+          {/* People detected (secondary info) */}
+          <div className="flex items-center gap-1.5 text-xs"
+               style={{ color: 'var(--color-text-tertiary)' }}>
+            <Users size={12} />
+            <span>{personCount} {personCount === 1 ? 'person' : 'people'} detected</span>
+          </div>
 
           {/* Status pill */}
           <div
@@ -281,6 +384,9 @@ export default function Dashboard() {
               />
             </div>
           </div>
+
+          {/* Seat grid */}
+          <SeatGrid seats={seatStatuses} />
         </section>
       </main>
 
@@ -288,7 +394,7 @@ export default function Dashboard() {
       <footer className="dashboard-footer">
         <p className="text-[10px] font-medium uppercase tracking-widest"
            style={{ color: 'var(--color-text-tertiary)' }}>
-          Powered by YOLOv8 · Real-time Computer Vision
+          Powered by YOLOv8 · Seat-Zone Occupancy Detection
         </p>
       </footer>
     </div>

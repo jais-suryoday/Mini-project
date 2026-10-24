@@ -15,6 +15,12 @@ export default defineConfig({
       '/video_feed': {
         target: 'http://localhost:8000',
       },
+      '/seats': {
+        target: 'http://localhost:8000',
+      },
+      '/occupancy': {
+        target: 'http://localhost:8000',
+      },
     },
   },
 })
