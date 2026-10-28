@@ -1,17 +1,125 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Occupancy Tracker — Library</title>
-    <meta name="description" content="Real-time AI-powered library seat occupancy tracker using YOLOv8 computer vision." />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Library Seat Occupancy Tracker</title>
+  <meta name="description" content="Real-time AI-powered library seat occupancy tracker using YOLOv8." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-left">
+      <span class="header-icon">📡</span>
+      <h1>Library Seat Occupancy Tracker</h1>
+    </div>
+    <div class="header-right">
+      <span id="clock" class="clock">--:--:-- --</span>
+      <span id="connection-badge" class="badge badge-offline">● Connecting…</span>
+    </div>
+  </header>
+
+  <!-- ── Main Content ────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Left: Video Feed -->
+    <section class="panel video-panel">
+      <div class="panel-bar">
+        <span id="video-title">📹 Live Camera Feed</span>
+        <div class="panel-bar-right">
+          <button id="setup-btn" class="btn btn-green" onclick="toggleCalibration()">⚙ Setup Seats</button>
+          <span id="rec-dot" class="rec-dot">● Recording</span>
+        </div>
+      </div>
+
+      <div class="video-frame" id="video-frame">
+        <!-- MJPEG video stream -->
+        <img
+          id="video-feed"
+          src="/video_feed"
+          alt="Live camera feed with seat detection overlays"
+          onload="onVideoLoad()"
+          onerror="onVideoError()"
+        />
+
+        <!-- Canvas overlay for seat calibration (hidden by default) -->
+        <canvas id="cal-canvas"></canvas>
+
+        <!-- Placeholder shown while loading or on error -->
+        <div id="video-placeholder" class="video-placeholder">
+          <span class="placeholder-icon">📹</span>
+          <span>Connecting to camera…</span>
+        </div>
+      </div>
+
+      <!-- Calibrator toolbar (hidden by default) -->
+      <div id="cal-toolbar" class="cal-toolbar" style="display:none;">
+        <span id="cal-info">0 seats defined — Click &amp; drag to draw seats</span>
+        <div class="cal-buttons">
+          <button class="btn btn-small" onclick="undoSeat()">↩ Undo</button>
+          <button class="btn btn-small btn-red" onclick="clearAllSeats()">🗑 Clear All</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Occupancy Stats -->
+    <section class="panel stats-panel">
+
+      <!-- Zone & date -->
+      <div class="zone-info">
+        <h2 id="zone-name">📍 Main Lab</h2>
+        <p id="date-display" class="date-text"></p>
+      </div>
+
+      <!-- SVG Ring Progress -->
+      <div class="ring-container">
+        <svg width="180" height="180" viewBox="0 0 180 180">
+          <circle class="ring-track" cx="90" cy="90" r="75" />
+          <circle class="ring-fill" id="ring-fill" cx="90" cy="90" r="75" />
+        </svg>
+        <div class="ring-center">
+          <span class="ring-number" id="ring-number">0</span>
+          <span class="ring-label" id="ring-label">of 0 seats</span>
+        </div>
+      </div>
+
+      <!-- Fraction -->
+      <p class="occ-text">
+        <strong id="occ-count">0</strong> / <span id="total-count">0</span> Seats Occupied
+      </p>
+
+      <!-- Person count -->
+      <p class="person-text">👤 <span id="person-count">0</span> <span id="person-word">people</span> detected</p>
+
+      <!-- Status pill -->
+      <div class="status-pill" id="status-pill">No Seats Defined</div>
+
+      <!-- Capacity bar -->
+      <div class="capacity-box">
+        <div class="capacity-header">
+          <span>Capacity</span>
+          <span id="cap-percent">0%</span>
+        </div>
+        <div class="capacity-track">
+          <div class="capacity-fill" id="cap-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Seat grid -->
+      <div class="seat-grid" id="seat-grid">
+        <p class="no-seats">🪑 No seats configured<br /><small>Click "Setup Seats" to define seat zones</small></p>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ── Footer ──────────────────────────────────────────────── -->
+  <footer class="footer">
+    Powered by YOLOv8 · Seat-Zone Occupancy Detection
+  </footer>
+
+  <script src="script.js"></script>
+</body>
 </html>

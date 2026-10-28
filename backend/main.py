@@ -22,6 +22,7 @@ import numpy as np
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from ultralytics import YOLO
 
@@ -716,3 +717,11 @@ async def websocket_endpoint(ws: WebSocket):
     finally:
         connected_clients.discard(ws)
         print(f"[WS] Client disconnected. Total: {len(connected_clients)}")
+
+
+# ---------------------------------------------------------------------------
+# Serve the frontend (plain HTML/CSS/JS from the static/ folder)
+# ---------------------------------------------------------------------------
+STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "frontend")
+if os.path.isdir(STATIC_DIR):
+    app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
