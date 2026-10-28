@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Library Seat Occupancy Tracker — Complete Project & Viva Guide</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 15mm 20mm 15mm;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2937;
+    background: #ffffff;
+    line-height: 1.6;
+    font-size: 13.5px;
+    padding: 20px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h1 {
+    color: #0f172a;
+    font-size: 26px;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 8px;
+    margin-top: 24px;
+    page-break-after: avoid;
+  }
+  h2 {
+    color: #1e3a8a;
+    font-size: 20px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 6px;
+    margin-top: 28px;
+    page-break-after: avoid;
+  }
+  h3 {
+    color: #1e40af;
+    font-size: 16px;
+    margin-top: 18px;
+    page-break-after: avoid;
+  }
+  h4 {
+    color: #374151;
+    font-size: 14px;
+    margin-top: 14px;
+    page-break-after: avoid;
+  }
+  p {
+    margin: 8px 0;
+  }
+  blockquote {
+    border-left: 4px solid #3b82f6;
+    background: #f8fafc;
+    padding: 8px 16px;
+    color: #475569;
+    margin: 12px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .code-block {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11.5px;
+    line-height: 1.45;
+    overflow-x: auto;
+    page-break-inside: avoid;
+    margin: 12px 0;
+  }
+  code {
+    background: #f1f5f9;
+    color: #b91c1c;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+  }
+  .code-block code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+  .table-container {
+    overflow-x: auto;
+    margin: 14px 0;
+    page-break-inside: avoid;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  th, td {
+    border: 1px solid #cbd5e1;
+    padding: 6px 10px;
+    text-align: left;
+  }
+  th {
+    background: #f1f5f9;
+    font-weight: 600;
+    color: #0f172a;
+  }
+  tr:nth-child(even) {
+    background: #f8fafc;
+  }
+  ul, ol {
+    padding-left: 24px;
+    margin: 8px 0;
+  }
+  li {
+    margin: 4px 0;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 24px 0;
+  }
+  strong {
+    color: #0f172a;
+  }
+  @media print {
+    body {
+      padding: 0;
+      font-size: 12px;
+    }
+    .code-block {
+      background: #f8fafc !important;
+      color: #0f172a !important;
+      border: 1px solid #cbd5e1;
+    }
+    h1, h2, h3 {
+      page-break-after: avoid;
+    }
+    table, blockquote, .code-block {
+      page-break-inside: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+<h1>AI Library Seat Occupancy Tracker — Complete Project Guide</h1>
+<p class='spacer'></p>
+<blockquote><strong>Prepared for:</strong> Mini-Project Presentation &amp; Viva</blockquote>
+<blockquote><strong>Last Updated:</strong> October 28, 2026</blockquote>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>Table of Contents</h2>
+<p class='spacer'></p>
+<ol>
+<li><a href="#1-project-overview">Project Overview</a></li>
+<li><a href="#2-problem-statement--motivation">Problem Statement &amp; Motivation</a></li>
+<li><a href="#3-technologies-used--why">Technologies Used &amp; Why</a></li>
+<li><a href="#4-project-folder-structure">Project Folder Structure</a></li>
+<li><a href="#5-system-architecture">System Architecture</a></li>
+<li><a href="#6-complete-data-flow">Complete Data Flow</a></li>
+<li><a href="#7-backend-deep-dive--mainpy">Backend Deep Dive — main.py</a></li>
+<li><a href="#8-frontend-deep-dive--html-css-js">Frontend Deep Dive — HTML, CSS, JS</a></li>
+<li><a href="#9-ai-models--yolov8-explained">AI Models — YOLOv8 Explained</a></li>
+<li><a href="#10-key-algorithms">Key Algorithms</a></li>
+<li><a href="#11-how-to-run-the-project">How to Run the Project</a></li>
+<li><a href="#12-feature-summary">Feature Summary</a></li>
+<li><a href="#13-limitations--future-scope">Limitations &amp; Future Scope</a></li>
+<li><a href="#14-viva-questions--answers">Viva Questions &amp; Answers (70+)</a></li>
+</ol>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>1. Project Overview</h2>
+<p class='spacer'></p>
+<p><strong>Project Name:</strong> AI Library Seat Occupancy Tracker</p>
+<p class='spacer'></p>
+<p><strong>One-Line Summary:</strong> A real-time AI system that uses a camera and YOLOv8 deep learning models to detect how many library seats are occupied and displays the results on a live web dashboard.</p>
+<p class='spacer'></p>
+<p><strong>What It Does (Simple Explanation):</strong></p>
+<ul>
+<li>A camera (webcam or video file) watches a library room</li>
+<li>AI models (YOLOv8) detect people in the video frame</li>
+<li>The system checks which defined "seat zones" have a person sitting in them</li>
+<li>A web dashboard shows: live video feed, which seats are occupied/vacant, total counts, and a visual ring chart — all updating in real-time</li>
+</ul>
+<p class='spacer'></p>
+<p><strong>Key Highlight:</strong> Everything runs from a <strong>single server</strong> — one command starts the AI, the video processing, AND the website. No separate installations needed for the frontend.</p>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>2. Problem Statement &amp; Motivation</h2>
+<p class='spacer'></p>
+<p><strong>Problem:</strong> In college and public libraries, students waste time walking around looking for empty seats, especially during exams. There's no way to know seat availability without physically going there.</p>
+<p class='spacer'></p>
+<p><strong>Solution:</strong> Install a camera and run this AI system. Students can check a webpage from their phone/laptop to see which seats are free — in real-time.</p>
+<p class='spacer'></p>
+<p><strong>Why AI?</strong> Traditional methods (sensors on each seat, RFID cards) are expensive and require hardware on every seat. With AI, one camera can monitor 10-20 seats simultaneously using just software.</p>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>3. Technologies Used &amp; Why</h2>
+<p class='spacer'></p>
+<h3>3.1 Python (Programming Language)</h3>
+<p class='spacer'></p>
+<p><strong>What:</strong> A general-purpose programming language known for simplicity and readability.</p>
+<p class='spacer'></p>
+<p><strong>Why Python for this project:</strong></p>
+<ul>
+<li>Best ecosystem for AI/ML — libraries like PyTorch, OpenCV, Ultralytics are all Python-native</li>
+<li>Easy to read and write — looks almost like English</li>
+<li>Huge community support</li>
+</ul>
+<p class='spacer'></p>
+<h3>3.2 FastAPI (Web Framework)</h3>
+<p class='spacer'></p>
+<p><strong>What:</strong> FastAPI is a modern Python web framework for building APIs (Application Programming Interfaces). An API is a way for different software programs to talk to each other.</p>
+<p class='spacer'></p>
+<p><strong>Why FastAPI over alternatives:</strong></p>
+<p class='spacer'></p>
+<div class="table-container"><table>
+<thead><tr><th>Framework</th><th>Speed</th><th>Async Support</th><th>Auto-Docs</th><th>Type Checking</th><th>Learning Curve</th></tr></thead><tbody>
+<tr><td><strong>FastAPI</strong></td><td>⚡ Very Fast</td><td>✅ Built-in</td><td>✅ Automatic</td><td>✅ Pydantic</td><td>Medium</td></tr>
+<tr><td>Flask</td><td>🐢 Slower</td><td>❌ Needs extensions</td><td>❌ Manual</td><td>❌ No</td><td>Easy</td></tr>
+<tr><td>Django</td><td>🐢 Slower</td><td>⚠️ Partial</td><td>❌ Manual</td><td>❌ No</td><td>Hard</td></tr>
+<tr><td>Express (Node.js)</td><td>⚡ Fast</td><td>✅ Built-in</td><td>❌ Manual</td><td>❌ No</td><td>Medium</td></tr>
+</tbody></table></div>
+<p class='spacer'></p>
+<p><strong>Key reasons FastAPI was chosen:</strong></p>
+<ol>
+<li><strong>Async support</strong> — Can handle video streaming, WebSockets, and AI inference simultaneously without blocking</li>
+<li><strong>Speed</strong> — One of the fastest Python frameworks (based on Starlette + Uvicorn)</li>
+<li><strong>WebSocket support</strong> — Built-in, needed for real-time data push</li>
+<li><strong>Static file serving</strong> — Can serve our HTML/CSS/JS frontend directly</li>
+<li><strong>Automatic validation</strong> — Uses Pydantic models to validate incoming data</li>
+</ol>
+<p class='spacer'></p>
+<p><strong>What is "async"?</strong> Normally, a program does one thing at a time (synchronous). Async means it can start multiple tasks and switch between them while waiting. Example: while waiting for a video frame to load, it can send data to a browser. This is critical because our app does many things at once.</p>
+<p class='spacer'></p>
+<h3>3.3 Uvicorn (Server)</h3>
+<p class='spacer'></p>
+<p><strong>What:</strong> Uvicorn is an ASGI server — it's the actual program that listens for web requests and runs the FastAPI application.</p>
+<p class='spacer'></p>
+<p><strong>Analogy:</strong> If FastAPI is the restaurant kitchen (where food is prepared), Uvicorn is the restaurant building (the physical place that receives customers). You need both.</p>
+<p class='spacer'></p>
+<p><strong>Why Uvicorn:</strong> It's the recommended server for FastAPI. It's very fast because it uses <code>uvloop</code> (a faster version of Python's default event loop).</p>
+<p class='spacer'></p>
+<h3>3.4 YOLOv8 (AI Model)</h3>
+<p class='spacer'></p>
+<p><strong>What:</strong> YOLO = "You Only Look Once". It's a family of deep learning models for detecting objects in images/video. YOLOv8 is the 8th version, made by Ultralytics.</p>
+<p class='spacer'></p>
+<p><strong>Why YOLOv8:</strong></p>
+<ul>
+<li><strong>Real-time speed</strong> — Can process 30+ frames per second</li>
+<li><strong>Pre-trained</strong> — Already trained on 80 object classes including "person" using the COCO dataset (330,000 images)</li>
+<li><strong>Multiple variants</strong> — We use two: Pose (skeleton keypoints) and Segmentation (body outline)</li>
+<li><strong>Easy to use</strong> — Just 2 lines: <code>model = YOLO("yolov8n-pose.pt")</code> then <code>model.predict(frame)</code></li>
+</ul>
+<p class='spacer'></p>
+<p><strong>What is "n" in yolov8n?</strong> It means "nano" — the smallest/fastest variant. Other sizes: s (small), m (medium), l (large), x (extra-large). We use nano because speed matters more than accuracy for real-time tracking.</p>
+<p class='spacer'></p>
+<h3>3.5 OpenCV (cv2)</h3>
+<p class='spacer'></p>
+<p><strong>What:</strong> Open Source Computer Vision Library. It handles everything related to images and video — reading camera frames, drawing rectangles, encoding images to JPEG, etc.</p>
+<p class='spacer'></p>
+<p><strong>Why OpenCV:</strong> Industry standard for computer vision. No alternative comes close for video I/O and image manipulation in Python.</p>
+<p class='spacer'></p>
+<h3>3.6 NumPy</h3>
+<p class='spacer'></p>
+<p><strong>What:</strong> Numerical Python — a library for fast mathematical operations on arrays/matrices.</p>
+<p class='spacer'></p>
+<p><strong>Why:</strong> Images are stored as matrices of numbers (pixels). NumPy makes operations on these matrices very fast. OpenCV and YOLO both use NumPy internally.</p>
+<p class='spacer'></p>
+<h3>3.7 HTML, CSS, JavaScript (Frontend)</h3>
+<p class='spacer'></p>
+<p><strong>What:</strong></p>
+<ul>
+<li><strong>HTML</strong> = Structure (what elements exist on the page — buttons, text, images)</li>
+<li><strong>CSS</strong> = Style (how elements look — colors, sizes, layouts)</li>
+<li><strong>JavaScript</strong> = Behavior (what happens when you click, how data updates in real-time)</li>
+</ul>
+<p class='spacer'></p>
+<p><strong>Why plain HTML/CSS/JS instead of React:</strong></p>
+<ul>
+<li>No build tools or npm needed — zero installation for frontend</li>
+<li>Every line is standard web technology taught in college</li>
+<li>One server serves everything (no separate frontend server)</li>
+<li>Examiner can read and understand the code easily</li>
+<li>Does the exact same job for a single-page application</li>
+</ul>
+<p class='spacer'></p>
+<h3>3.8 WebSocket</h3>
+<p class='spacer'></p>
+<p><strong>What:</strong> A communication protocol that keeps a persistent connection between the browser and server, allowing the server to push data to the browser instantly.</p>
+<p class='spacer'></p>
+<p><strong>Normal HTTP vs WebSocket:</strong></p>
+<ul>
+<li><strong>HTTP:</strong> Browser asks → Server responds → Connection closes. Browser must keep asking repeatedly ("polling").</li>
+<li><strong>WebSocket:</strong> Connection stays open. Server can send data anytime without being asked. Much faster and more efficient.</li>
+</ul>
+<p class='spacer'></p>
+<p><strong>Why we need it:</strong> Occupancy data changes every second. With WebSocket, the server pushes new data to the browser instantly. Without it, the browser would have to refresh or poll every second.</p>
+<p class='spacer'></p>
+<h3>3.9 MJPEG Streaming</h3>
+<p class='spacer'></p>
+<p><strong>What:</strong> Motion JPEG — a video streaming method where each frame is sent as a separate JPEG image, one after another.</p>
+<p class='spacer'></p>
+<p><strong>Why MJPEG:</strong></p>
+<ul>
+<li>Works in any browser with a simple <code>&lt;img&gt;</code> tag — no video player needed</li>
+<li>No complex video codecs required</li>
+<li>Low latency — each frame is independent</li>
+<li>Simple to implement server-side</li>
+</ul>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>4. Project Folder Structure</h2>
+<p class='spacer'></p>
+<pre class="code-block "><code>Mini-project/
+│
+├── backend/                    ← All server-side code
+│   ├── main.py                 ← THE main file (727 lines) — entire backend
+│   ├── requirements.txt        ← Python packages needed
+│   ├── seats.json              ← Saved seat zone positions
+│   ├── yolov8n-pose.pt         ← AI model file (pose detection)
+│   ├── yolov8n-seg.pt          ← AI model file (segmentation)
+│   ├── 329307.mp4              ← Test video file (optional)
+│   ├── generate_test_video.py  ← Script to create test videos
+│   └── venv/                   ← Python virtual environment
+│
+├── frontend/                   ← All client-side code
+│   ├── index.html              ← Page structure (125 lines)
+│   ├── style.css               ← Page styling (300 lines)
+│   └── script.js               ← Page logic (520 lines)</code></pre>
+<p class='spacer'></p>
+<p><strong>Total code:</strong> ~1,670 lines across 4 files.</p>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>5. System Architecture</h2>
+<p class='spacer'></p>
+<pre class="code-block "><code>┌─────────────────────────────────────────────────────────────┐
+│                    USER'S BROWSER                           │
+│                                                             │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌───────────┐  │
+│  │index.html│  │style.css │  │script.js │  │  WebSocket│  │
+│  │(Structure)│ │(Styling) │  │(Logic)   │  │  Client   │  │
+│  └──────────┘  └──────────┘  └──────────┘  └─────┬─────┘  │
+│                                                   │        │
+└───────────────────────────────────────────────────┼────────┘
+                                                    │
+                     HTTP + WebSocket               │
+                                                    │
+┌───────────────────────────────────────────────────┼────────┐
+│              FastAPI SERVER (port 8000)            │        │
+│                                                   │        │
+│  ┌─────────────────────────────────────────────┐  │        │
+│  │           Uvicorn (ASGI Server)             │  │        │
+│  └─────────────────────────────────────────────┘  │        │
+│                                                   │        │
+│  ┌─────────┐  ┌──────────┐  ┌──────────┐  ┌─────┴─────┐  │
+│  │ /health │  │ /seats   │  │/video_feed│  │   /ws     │  │
+│  │  (GET)  │  │(GET/POST)│  │  (MJPEG) │  │(WebSocket)│  │
+│  └─────────┘  └──────────┘  └──────────┘  └───────────┘  │
+│                                                           │
+│  ┌───────────────────────────────────────────────────┐    │
+│  │        Background Tasks (run continuously)        │    │
+│  │                                                   │    │
+│  │  _inference_loop()     _broadcast_loop()          │    │
+│  │  ├─ Read camera frame  ├─ Every 1 second          │    │
+│  │  ├─ Run YOLOv8 Pose    ├─ Send occupancy JSON     │    │
+│  │  ├─ Run YOLOv8 Seg     │  to all connected        │    │
+│  │  ├─ Match to seats     │  WebSocket clients        │    │
+│  │  ├─ Draw overlays      └──────────────────────────│    │
+│  │  └─ Encode JPEG                                   │    │
+│  └───────────────────────────────────────────────────┘    │
+│                                                           │
+│  ┌─────────────┐  ┌────────────────┐  ┌──────────────┐   │
+│  │  Camera /   │  │ YOLOv8n-pose  │  │ YOLOv8n-seg  │   │
+│  │  Video File │  │ (Skeleton)    │  │ (Body Shape) │   │
+│  └─────────────┘  └────────────────┘  └──────────────┘   │
+└───────────────────────────────────────────────────────────┘</code></pre>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>6. Complete Data Flow</h2>
+<p class='spacer'></p>
+<p>Here's exactly what happens from camera to browser, step by step:</p>
+<p class='spacer'></p>
+<h3>Step 1: Camera Capture</h3>
+<pre class="code-block python"><code>cap = cv2.VideoCapture(VIDEO_SOURCE)  # Open camera (0) or video file
+ret, frame = cap.read()               # Read one frame (a single image)</code></pre>
+<p>The frame is a NumPy array of shape <code>(height, width, 3)</code> — 3 channels for Blue, Green, Red.</p>
+<p class='spacer'></p>
+<h3>Step 2: AI Inference (Both Models Run in Parallel)</h3>
+<pre class="code-block python"><code>seg_results, pose_results = await asyncio.gather(
+    asyncio.to_thread(_run_seg),    # Segmentation model
+    asyncio.to_thread(_run_pose),   # Pose model
+)</code></pre>
+<ul>
+<li><strong>Pose model</strong> → Detects 17 body keypoints (nose, eyes, ears, shoulders, elbows, wrists, hips, knees, ankles) with confidence scores</li>
+<li><strong>Segmentation model</strong> → Creates a pixel-perfect body outline (silhouette mask)</li>
+</ul>
+<p class='spacer'></p>
+<h3>Step 3: Extract Torso Bounding Box</h3>
+<p>From pose keypoints, we build a tight box around ONLY the head and shoulders (keypoints 0-6). We deliberately exclude hands, elbows, knees, feet because:</p>
+<ul>
+<li>A person reaching across to a neighbor's seat shouldn't mark that seat as occupied</li>
+<li>The head+shoulder position is the most reliable indicator of where someone is sitting</li>
+</ul>
+<p class='spacer'></p>
+<h3>Step 4: Match People to Seats</h3>
+<p>For each person's torso box, check every defined seat zone:</p>
+<ul>
+<li>Is the person's center inside the seat? → Strong match (overlap = 1.0)</li>
+<li>Otherwise, calculate how much the torso box overlaps the seat area</li>
+<li>Assign each person to their BEST matching seat (highest overlap)</li>
+<li>A person can only occupy ONE seat (prevents double-counting)</li>
+</ul>
+<p class='spacer'></p>
+<h3>Step 5: Temporal Smoothing</h3>
+<p>If a seat was detected as occupied, hold that status for 2 seconds even if detection briefly drops. This prevents flickering when someone leans forward or turns their head momentarily.</p>
+<p class='spacer'></p>
+<h3>Step 6: Draw Visual Overlays</h3>
+<p>On the video frame, draw:</p>
+<ul>
+<li>Green/red rectangles for each seat (vacant/occupied)</li>
+<li>Green body silhouettes for each detected person</li>
+<li>Labels showing "Seat 1: Occupied" etc.</li>
+<li>HUD showing counts ("Seats: 2/5 occupied", "People: 3")</li>
+</ul>
+<p class='spacer'></p>
+<h3>Step 7: Encode &amp; Store</h3>
+<pre class="code-block python"><code>_, jpeg = cv2.imencode(".jpg", annotated, [cv2.IMWRITE_JPEG_QUALITY, 75])
+_latest_jpeg = jpeg.tobytes()  # Store for MJPEG streaming</code></pre>
+<p class='spacer'></p>
+<h3>Step 8: Update Shared State</h3>
+<pre class="code-block python"><code>latest_occupancy = {
+    "zone": "Main Lab",
+    "occupied_seats": 2,
+    "total_seats": 5,
+    "seats": [{"id": 1, "label": "Seat 1", "occupied": true}, ...],
+    "person_count": 3,
+    "timestamp": 1698400000.0
+}</code></pre>
+<p class='spacer'></p>
+<h3>Step 9: Broadcast via WebSocket</h3>
+<p>Every 1 second, the broadcast loop sends <code>latest_occupancy</code> as JSON to all connected browsers.</p>
+<p class='spacer'></p>
+<h3>Step 10: Browser Updates Dashboard</h3>
+<p>JavaScript receives the JSON, parses it, and updates every element on the page — ring chart, seat chips, counts, status pill, capacity bar.</p>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>7. Backend Deep Dive — main.py</h2>
+<p class='spacer'></p>
+<p>The entire backend is a single file: <code>main.py</code> (727 lines). Here's every section explained:</p>
+<p class='spacer'></p>
+<h3>7.1 Imports (Lines 10-27)</h3>
+<p class='spacer'></p>
+<pre class="code-block python"><code>import asyncio          # For running multiple tasks concurrently
+import json             # For reading/writing JSON data
+import os               # For file path operations
+import threading        # For thread-safe locks
+import time             # For timestamps and delays
+import cv2              # OpenCV — camera, image processing
+import numpy as np      # NumPy — numerical arrays (images are arrays)
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
+from ultralytics import YOLO</code></pre>
+<p class='spacer'></p>
+<h3>7.2 Configuration (Lines 29-64)</h3>
+<p class='spacer'></p>
+<p>All tunable parameters are at the top for easy modification:</p>
+<p class='spacer'></p>
+<div class="table-container"><table>
+<thead><tr><th>Variable</th><th>Value</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>ZONE_NAME</code></td><td>"Main Lab"</td><td>Name shown on dashboard</td></tr>
+<tr><td><code>VIDEO_SOURCE</code></td><td><code>0</code> or <code>"329307.mp4"</code></td><td><code>0</code> = webcam, string = video file</td></tr>
+<tr><td><code>BROADCAST_INTERVAL</code></td><td>1.0 sec</td><td>How often to push updates to browsers</td></tr>
+<tr><td><code>CONFIDENCE_THRESHOLD</code></td><td>0.45</td><td>Pose model: minimum confidence to accept a detection (0-1)</td></tr>
+<tr><td><code>SEG_CONFIDENCE_THRESHOLD</code></td><td>0.30</td><td>Seg model: lower threshold for better body outline recall</td></tr>
+<tr><td><code>NMS_IOU_THRESHOLD</code></td><td>0.4</td><td>Non-Maximum Suppression: merges overlapping boxes</td></tr>
+<tr><td><code>HEAD_KP_INDICES</code></td><td>[0,1,2,3,4]</td><td>COCO keypoints: nose, left_eye, right_eye, left_ear, right_ear</td></tr>
+<tr><td><code>HEAD_KP_CONFIDENCE</code></td><td>0.3</td><td>Minimum keypoint confidence</td></tr>
+<tr><td><code>MIN_HEAD_KPS</code></td><td>2</td><td>At least 2 head keypoints must be visible</td></tr>
+<tr><td><code>OVERLAP_THRESHOLD</code></td><td>0.15</td><td>Minimum overlap fraction to count as "occupied"</td></tr>
+<tr><td><code>OCCUPANCY_HOLD_SECONDS</code></td><td>2.0</td><td>Temporal smoothing hold time</td></tr>
+</tbody></table></div>
+<p class='spacer'></p>
+<h3>7.3 Data Models (Lines 66-113)</h3>
+<p class='spacer'></p>
+<p><strong>SeatZoneIn</strong> — Pydantic model for validating incoming seat data:</p>
+<pre class="code-block python"><code>class SeatZoneIn(BaseModel):
+    id: int          # Unique seat number
+    label: str       # Display name ("Seat 1")
+    x1: float        # Top-left X (0 to 1, normalized)
+    y1: float        # Top-left Y
+    x2: float        # Bottom-right X
+    y2: float        # Bottom-right Y</code></pre>
+<p class='spacer'></p>
+<p><strong>Why normalized coordinates (0-1)?</strong> The actual video resolution might be 1920×1080 or 640×480 — different cameras give different sizes. By storing coordinates as fractions (e.g., 0.25 means "25% from the left"), the seat zones work regardless of resolution.</p>
+<p class='spacer'></p>
+<p><strong>SeatZoneState</strong> — Runtime state that adds <code>occupied</code> boolean:</p>
+<pre class="code-block python"><code>class SeatZoneState:
+    # ... all fields from SeatZoneIn plus:
+    self.occupied = False  # Updated by inference loop</code></pre>
+<p class='spacer'></p>
+<h3>7.4 Persistence — seats.json (Lines 116-136)</h3>
+<p class='spacer'></p>
+<p>Seat definitions are saved to <code>seats.json</code> so they survive server restarts:</p>
+<pre class="code-block python"><code>def _save_seats(seats):
+    with open(SEATS_FILE, "w") as f:
+        json.dump([s.to_defn() for s in seats], f, indent=2)
+
+def _load_seats():
+    with open(SEATS_FILE, "r") as f:
+        raw = json.load(f)
+    return [SeatZoneState(SeatZoneIn(**s)) for s in raw]</code></pre>
+<p class='spacer'></p>
+<h3>7.5 Shared State &amp; Thread Safety (Lines 138-158)</h3>
+<p class='spacer'></p>
+<pre class="code-block python"><code>seat_zones: List[SeatZoneState] = _load_seats()
+_seat_lock = threading.Lock()       # Protects seat_zones from race conditions
+_frame_lock = threading.Lock()      # Protects _latest_jpeg
+_latest_jpeg: bytes | None = None   # Most recent annotated frame
+connected_clients: Set[WebSocket] = set()  # All connected browsers</code></pre>
+<p class='spacer'></p>
+<p><strong>Why locks?</strong> The inference loop runs in a background thread while the web server runs in the main thread. If both try to read/write <code>seat_zones</code> at the same time, data could get corrupted. A <code>Lock</code> ensures only one thread accesses the data at a time.</p>
+<p class='spacer'></p>
+<h3>7.6 Person Contour Merging — Union-Find (Lines 162-242)</h3>
+<p class='spacer'></p>
+<p><strong>Problem:</strong> Sometimes the segmentation model splits one person into two blobs (e.g., if an arm is extended away from the body).</p>
+<p class='spacer'></p>
+<p><strong>Solution:</strong> Union-Find algorithm (also called Disjoint Set Union):</p>
+<ol>
+<li>For every pair of detected person blobs, calculate how much their bounding boxes overlap</li>
+<li>If overlap (IoU) &gt; 15% OR one box contains &gt; 40% of the other → merge them</li>
+<li>Use Union-Find data structure for efficient grouping</li>
+<li>Combine merged blobs into a single convex hull</li>
+</ol>
+<p class='spacer'></p>
+<p><strong>What is Union-Find?</strong> A data structure that efficiently groups elements. Each element has a "parent". To check if two elements are in the same group, follow parents to the root. To merge groups, point one root to the other. Uses "path compression" for speed.</p>
+<p class='spacer'></p>
+<h3>7.7 Overlap Detection (Lines 245-322)</h3>
+<p class='spacer'></p>
+<p>Two methods for checking if a person is in a seat:</p>
+<p class='spacer'></p>
+<p><strong>Method 1: Polygon-based (using segmentation contour)</strong></p>
+<pre class="code-block python"><code>def _polygon_seat_overlap_ratio(contour, sx1, sy1, sx2, sy2):
+    # Create a small image (mask) the size of the seat
+    # Draw the person's body shape on it
+    # Count how many pixels overlap
+    # Return: overlap_pixels / seat_total_pixels</code></pre>
+<p class='spacer'></p>
+<p><strong>Method 2: Rectangle-based (using bounding box)</strong></p>
+<pre class="code-block python"><code>def _overlap_ratio(px1, py1, px2, py2, sx1, sy1, sx2, sy2):
+    # Calculate intersection area of two rectangles
+    # Return: intersection_area / seat_area</code></pre>
+<p class='spacer'></p>
+<p><strong>Method 3: Center-in-rect check</strong></p>
+<pre class="code-block python"><code>def _center_in_rect(px1, py1, px2, py2, sx1, sy1, sx2, sy2):
+    # Calculate center point of person box
+    # Return True if center is inside seat rectangle</code></pre>
+<p class='spacer'></p>
+<h3>7.8 The Inference Loop — Heart of the System (Lines 325-579)</h3>
+<p class='spacer'></p>
+<p>This is the most important function. It runs continuously as a background task:</p>
+<p class='spacer'></p>
+<pre class="code-block "><code>LOOP (runs every ~50ms = 20 frames per second):
+│
+├── 1. Read frame from camera
+│
+├── 2. Run BOTH AI models in PARALLEL:
+│   ├── Pose model → 17 keypoints per person
+│   └── Seg model  → body outline per person
+│
+├── 3. From Pose: extract head+shoulder keypoints
+│   ├── At least 2 head keypoints must be visible
+│   └── Build tight "torso box" from keypoints 0-6
+│
+├── 4. From Seg: extract body contours
+│   └── Only keep contours that match a pose-validated person
+│
+├── 5. For each person's torso box:
+│   ├── Check every seat zone
+│   ├── Find the seat with highest overlap
+│   └── Mark that ONE seat as occupied
+│
+├── 6. Apply temporal smoothing (2-sec hold)
+│
+├── 7. Draw on frame:
+│   ├── Seat rectangles (green=vacant, red=occupied)
+│   ├── Person silhouettes (green outline)
+│   ├── Labels ("Seat 1: Occupied")
+│   └── HUD counts
+│
+├── 8. Encode frame to JPEG → store in _latest_jpeg
+│
+└── 9. Update latest_occupancy dictionary</code></pre>
+<p class='spacer'></p>
+<p><strong>Why two models?</strong></p>
+<ul>
+<li><strong>Pose model</strong> is used for SEAT DETECTION (head+shoulders tell us WHERE someone is sitting)</li>
+<li><strong>Seg model</strong> is used for VISUAL DISPLAY (body silhouette looks nice on the video feed)</li>
+<li>They serve different purposes and complement each other</li>
+</ul>
+<p class='spacer'></p>
+<h3>7.9 Broadcast Loop (Lines 582-598)</h3>
+<p class='spacer'></p>
+<p>Simple loop that runs every 1 second:</p>
+<pre class="code-block python"><code>async def _broadcast_loop():
+    while True:
+        await asyncio.sleep(BROADCAST_INTERVAL)
+        payload = json.dumps(latest_occupancy)
+        for ws in connected_clients:
+            await ws.send_text(payload)  # Push to each browser</code></pre>
+<p class='spacer'></p>
+<h3>7.10 FastAPI Lifespan (Lines 601-613)</h3>
+<p class='spacer'></p>
+<p>Controls what happens when the server starts and stops:</p>
+<pre class="code-block python"><code>@asynccontextmanager
+async def lifespan(app):
+    # STARTUP: Start background tasks
+    inference_task = asyncio.create_task(_inference_loop())
+    broadcast_task = asyncio.create_task(_broadcast_loop())
+    yield  # Server is now running...
+    # SHUTDOWN: Cancel tasks, release camera
+    inference_task.cancel()
+    broadcast_task.cancel()</code></pre>
+<p class='spacer'></p>
+<h3>7.11 API Endpoints (Lines 616-727)</h3>
+<p class='spacer'></p>
+<div class="table-container"><table>
+<thead><tr><th>Endpoint</th><th>Method</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>/health</code></td><td>GET</td><td>Returns <code>{"status": "ok"}</code> — used to check if server is alive</td></tr>
+<tr><td><code>/seats</code></td><td>GET</td><td>Returns all seat zone definitions</td></tr>
+<tr><td><code>/seats</code></td><td>POST</td><td>Saves new seat zones (from calibrator)</td></tr>
+<tr><td><code>/seats/{id}</code></td><td>DELETE</td><td>Remove a single seat zone</td></tr>
+<tr><td><code>/video_feed</code></td><td>GET</td><td>MJPEG stream — continuous JPEG frames</td></tr>
+<tr><td><code>/occupancy</code></td><td>GET</td><td>Returns current occupancy snapshot</td></tr>
+<tr><td><code>/ws</code></td><td>WebSocket</td><td>Persistent connection for real-time updates</td></tr>
+<tr><td><code>/</code></td><td>Static</td><td>Serves <code>index.html</code>, <code>style.css</code>, <code>script.js</code></td></tr>
+</tbody></table></div>
+<p class='spacer'></p>
+<p><strong>CORS Middleware:</strong></p>
+<pre class="code-block python"><code>app.add_middleware(CORSMiddleware, allow_origins=["*"], ...)</code></pre>
+<p>CORS = Cross-Origin Resource Sharing. This allows the frontend to call API endpoints even if served from a different domain. We allow all origins (<code>*</code>) for simplicity.</p>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>8. Frontend Deep Dive — HTML, CSS, JS</h2>
+<p class='spacer'></p>
+<h3>8.1 index.html (125 lines) — Page Structure</h3>
+<p class='spacer'></p>
+<p>The HTML defines WHAT exists on the page. Key sections:</p>
+<p class='spacer'></p>
+<p><strong>Header:</strong></p>
+<pre class="code-block html"><code>&lt;header&gt;
+  &lt;h1&gt;Library Seat Occupancy Tracker&lt;/h1&gt;
+  &lt;span id="clock"&gt;--:--:-- --&lt;/span&gt;           &lt;!-- Live clock --&gt;
+  &lt;span id="connection-badge"&gt;● Connecting…&lt;/span&gt;  &lt;!-- WebSocket status --&gt;
+&lt;/header&gt;</code></pre>
+<p class='spacer'></p>
+<p><strong>Video Panel (left side):</strong></p>
+<pre class="code-block html"><code>&lt;section class="video-panel"&gt;
+  &lt;img id="video-feed" src="/video_feed" /&gt;     &lt;!-- MJPEG stream --&gt;
+  &lt;canvas id="cal-canvas"&gt;&lt;/canvas&gt;              &lt;!-- Seat drawing overlay --&gt;
+  &lt;button onclick="toggleCalibration()"&gt;⚙ Setup Seats&lt;/button&gt;
+&lt;/section&gt;</code></pre>
+<p class='spacer'></p>
+<p><strong>Stats Panel (right side):</strong></p>
+<pre class="code-block html"><code>&lt;section class="stats-panel"&gt;
+  &lt;!-- SVG Ring chart --&gt;
+  &lt;svg&gt;&lt;circle class="ring-fill" r="75" /&gt;&lt;/svg&gt;
+
+  &lt;!-- Counts --&gt;
+  &lt;strong id="occ-count"&gt;0&lt;/strong&gt; / &lt;span id="total-count"&gt;0&lt;/span&gt;
+
+  &lt;!-- Status pill: "Available" / "Full" --&gt;
+  &lt;div id="status-pill"&gt;No Seats Defined&lt;/div&gt;
+
+  &lt;!-- Capacity bar --&gt;
+  &lt;div class="capacity-fill" id="cap-fill"&gt;&lt;/div&gt;
+
+  &lt;!-- Individual seat chips --&gt;
+  &lt;div id="seat-grid"&gt;&lt;/div&gt;
+&lt;/section&gt;</code></pre>
+<p class='spacer'></p>
+<p><strong>How does <code>&lt;img src="/video_feed"&gt;</code> show video?</strong></p>
+<p>The <code>/video_feed</code> endpoint returns a never-ending stream of JPEG images (MJPEG). The browser's <code>&lt;img&gt;</code> tag keeps receiving and displaying new images, creating the appearance of a video. No JavaScript is needed for this — the browser handles it natively.</p>
+<p class='spacer'></p>
+<h3>8.2 style.css (300 lines) — Visual Design</h3>
+<p class='spacer'></p>
+<p>Key CSS concepts used:</p>
+<p class='spacer'></p>
+<p><strong>CSS Variables</strong> (defining colors once, using everywhere):</p>
+<pre class="code-block css"><code>:root {
+  --green: #16a34a;
+  --red: #dc2626;
+  --amber: #d97706;
+  --gray: #6b7280;
+}
+/* Usage: */
+.btn-green { color: var(--green); }</code></pre>
+<p class='spacer'></p>
+<p><strong>CSS Grid</strong> (two-column layout):</p>
+<pre class="code-block css"><code>.main {
+  display: grid;
+  grid-template-columns: 1fr 340px;  /* Left takes remaining space, right is 340px */
+  gap: 12px;
+}</code></pre>
+<p class='spacer'></p>
+<p><strong>SVG Ring Chart Styling:</strong></p>
+<pre class="code-block css"><code>.ring-fill {
+  stroke-dasharray: 471.24;     /* Full circumference = 2 × π × 75 */
+  stroke-dashoffset: 471.24;    /* Start empty (offset = full circumference) */
+  /* To show 50% filled: offset = 471.24 × 0.5 = 235.62 */
+}</code></pre>
+<p class='spacer'></p>
+<p><strong>Responsive Design</strong> (stacks vertically on small screens):</p>
+<pre class="code-block css"><code>@media (max-width: 840px) {
+  .main { grid-template-columns: 1fr; }  /* Single column on mobile */
+}</code></pre>
+<p class='spacer'></p>
+<h3>8.3 script.js (520 lines) — All Frontend Logic</h3>
+<p class='spacer'></p>
+<h4>Section 1: DOM References (Lines 6-30)</h4>
+<pre class="code-block javascript"><code>var clockEl = document.getElementById("clock");
+var badgeEl = document.getElementById("connection-badge");
+// ... 16 more element references</code></pre>
+<p><code>document.getElementById()</code> finds an HTML element by its <code>id</code> attribute so JavaScript can modify it later.</p>
+<p class='spacer'></p>
+<h4>Section 2: WebSocket Connection (Lines 64-108)</h4>
+<pre class="code-block javascript"><code>function connectWebSocket() {
+  var wsUrl = "ws://" + window.location.host + "/ws";
+  ws = new WebSocket(wsUrl);
+
+  ws.onopen = function() {
+    badgeEl.textContent = "● Live";        // Show "Live" badge
+  };
+
+  ws.onmessage = function(event) {
+    var data = JSON.parse(event.data);      // Parse JSON string to object
+    updateDashboard(data);                  // Update all UI elements
+  };
+
+  ws.onclose = function() {
+    setTimeout(connectWebSocket, 3000);     // Auto-reconnect after 3 seconds
+  };
+}</code></pre>
+<p class='spacer'></p>
+<h4>Section 3: Dashboard Update (Lines 111-207)</h4>
+<p>When new data arrives via WebSocket, <code>updateDashboard()</code> updates:</p>
+<ul>
+<li>Zone name text</li>
+<li>Occupied/total counts</li>
+<li>Ring progress (SVG stroke-dashoffset animation)</li>
+<li>Status pill color and label</li>
+<li>Capacity bar width and color</li>
+<li>Seat grid chips (green "Vacant" or red "Occupied")</li>
+</ul>
+<p class='spacer'></p>
+<p><strong>Ring Progress Math:</strong></p>
+<pre class="code-block javascript"><code>var circumference = 2 * Math.PI * 75;           // = 471.24
+var ratio = occupied / total;                     // e.g., 3/5 = 0.6
+var offset = circumference * (1 - ratio);         // = 471.24 × 0.4 = 188.5
+ringFill.style.strokeDashoffset = offset;         // Shows 60% of ring filled</code></pre>
+<p class='spacer'></p>
+<h4>Section 4: Seat Calibration (Lines 238-480)</h4>
+<p>The calibrator lets users define seat zones by drawing rectangles on the video:</p>
+<p class='spacer'></p>
+<ol>
+<li><strong>Enter calibration mode:</strong> Click "Setup Seats" → Canvas overlay appears on top of video</li>
+<li><strong>Draw a seat:</strong> Click and drag → Blue dashed rectangle follows mouse</li>
+<li><strong>Release:</strong> If rectangle is big enough (&gt;2% of frame), create a new seat</li>
+<li><strong>Delete:</strong> Each seat has a small red × button — click to remove</li>
+<li><strong>Undo:</strong> Remove the last-drawn seat</li>
+<li><strong>Clear All:</strong> Remove all seats</li>
+<li><strong>Auto-save:</strong> Every change immediately calls <code>POST /seats</code> to save to the backend</li>
+</ol>
+<p class='spacer'></p>
+<p><strong>Normalized coordinates:</strong> All seat positions are stored as 0-1 fractions:</p>
+<pre class="code-block javascript"><code>var pos = {
+  x: (event.clientX - rect.left) / rect.width,   // 0 to 1
+  y: (event.clientY - rect.top) / rect.height     // 0 to 1
+};</code></pre>
+<p class='spacer'></p>
+<h4>Section 5: Seat API Calls (Lines 483-520)</h4>
+<pre class="code-block javascript"><code>// Save seats to backend
+fetch("/seats", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ seats: seats })
+});
+
+// Load seats on page load
+fetch("/seats")
+  .then(function(res) { return res.json(); })
+  .then(function(data) { seats = data.seats; });</code></pre>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>9. AI Models — YOLOv8 Explained</h2>
+<p class='spacer'></p>
+<h3>9.1 What is Deep Learning?</h3>
+<p class='spacer'></p>
+<ul>
+<li><strong>Traditional programming:</strong> Human writes rules → Computer follows rules</li>
+<li><strong>Machine Learning:</strong> Human provides data → Computer learns patterns</li>
+<li><strong>Deep Learning:</strong> A type of ML using "neural networks" with many layers (hence "deep")</li>
+</ul>
+<p class='spacer'></p>
+<h3>9.2 What is YOLO?</h3>
+<p class='spacer'></p>
+<p>YOLO (You Only Look Once) is a real-time object detection algorithm:</p>
+<ul>
+<li><strong>Input:</strong> An image (e.g., 640×480 pixels)</li>
+<li><strong>Output:</strong> Bounding boxes with class labels and confidence scores</li>
+</ul>
+<p class='spacer'></p>
+<p><strong>How it works (simplified):</strong></p>
+<ol>
+<li>Divide the image into a grid (e.g., 20×20)</li>
+<li>For each grid cell, predict: "Is there an object here? What class? Where exactly?"</li>
+<li>Filter out low-confidence predictions</li>
+<li>Apply NMS (Non-Maximum Suppression) to remove duplicate detections</li>
+<li>Output final list of detections</li>
+</ol>
+<p class='spacer'></p>
+<p><strong>Why "You Only Look Once"?</strong> Earlier methods (R-CNN) scanned the image multiple times. YOLO processes the entire image in a single pass through the neural network — much faster.</p>
+<p class='spacer'></p>
+<h3>9.3 Two Models We Use</h3>
+<p class='spacer'></p>
+<p><strong>Model 1: YOLOv8n-Pose (yolov8n-pose.pt)</strong></p>
+<ul>
+<li>Detects people AND their skeleton (17 keypoints)</li>
+<li>We use keypoints 0-6 (head + shoulders) for seat detection</li>
+<li>Used for: DECIDING which seats are occupied</li>
+</ul>
+<p class='spacer'></p>
+<p><strong>Model 2: YOLOv8n-Seg (yolov8n-seg.pt)</strong></p>
+<ul>
+<li>Detects people AND their pixel-perfect body outline</li>
+<li>Produces a segmentation mask (which pixels belong to the person)</li>
+<li>Used for: DRAWING body silhouettes on the video</li>
+</ul>
+<p class='spacer'></p>
+<h3>9.4 COCO Keypoints (17 total)</h3>
+<p class='spacer'></p>
+<pre class="code-block "><code> 0: Nose
+ 1: Left Eye       2: Right Eye
+ 3: Left Ear       4: Right Ear
+ 5: Left Shoulder  6: Right Shoulder
+ 7: Left Elbow     8: Right Elbow
+ 9: Left Wrist    10: Right Wrist
+11: Left Hip      12: Right Hip
+13: Left Knee     14: Right Knee
+15: Left Ankle    16: Right Ankle</code></pre>
+<p class='spacer'></p>
+<p>We use 0-6 (head region) for seat detection because the head position reliably indicates where someone is sitting.</p>
+<p class='spacer'></p>
+<h3>9.5 Non-Maximum Suppression (NMS)</h3>
+<p class='spacer'></p>
+<p><strong>Problem:</strong> The model might detect the same person 3 times with slightly different boxes.</p>
+<p class='spacer'></p>
+<p><strong>Solution (NMS):</strong></p>
+<ol>
+<li>Sort all boxes by confidence (highest first)</li>
+<li>Take the best box → keep it</li>
+<li>Remove all other boxes that overlap &gt; threshold (IoU &gt; 0.4) with the kept box</li>
+<li>Repeat until no boxes remain</li>
+</ol>
+<p class='spacer'></p>
+<h3>9.6 What is IoU?</h3>
+<p class='spacer'></p>
+<p>IoU = Intersection over Union</p>
+<p class='spacer'></p>
+<pre class="code-block "><code>IoU = Area of Overlap / Area of Combined Region</code></pre>
+<p class='spacer'></p>
+<ul>
+<li>IoU = 1.0 → Perfect overlap (same box)</li>
+<li>IoU = 0.5 → 50% overlap</li>
+<li>IoU = 0.0 → No overlap at all</li>
+</ul>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>10. Key Algorithms</h2>
+<p class='spacer'></p>
+<h3>10.1 Temporal Smoothing</h3>
+<p class='spacer'></p>
+<pre class="code-block python"><code>OCCUPANCY_HOLD_SECONDS = 2.0
+
+if detected_now:
+    seat_last_occupied[seat.id] = now     # Record timestamp
+
+last_seen = seat_last_occupied.get(seat.id, 0.0)
+occupied = (now - last_seen) &lt; OCCUPANCY_HOLD_SECONDS  # True if within 2 sec</code></pre>
+<p class='spacer'></p>
+<p><strong>Why?</strong> AI detection isn't perfect. If someone turns their head for 0.5 seconds, detection might briefly fail. Without smoothing, the seat would flicker between "occupied" and "vacant". The 2-second hold prevents this.</p>
+<p class='spacer'></p>
+<h3>10.2 Exclusive Seat Assignment</h3>
+<p class='spacer'></p>
+<pre class="code-block python"><code>for person in torso_boxes:
+    best_seat = find_highest_overlap_seat(person)
+    mark_occupied(best_seat)  # ONE person → ONE seat only</code></pre>
+<p class='spacer'></p>
+<p><strong>Why?</strong> If a person sits between two seats, their bounding box might overlap both. Without exclusive assignment, both seats would show as "occupied" — wrong! We assign each person to their single best-matching seat.</p>
+<p class='spacer'></p>
+<h3>10.3 Head Keypoint Verification</h3>
+<p class='spacer'></p>
+<pre class="code-block python"><code>head_visible = count(keypoints[0:4] with confidence &gt; 0.3)
+if head_visible &lt; 2:
+    skip_this_detection()  # Not a real person</code></pre>
+<p class='spacer'></p>
+<p><strong>Why?</strong> The model sometimes detects random objects as "person" (false positives). Real people have visible heads. By requiring at least 2 head keypoints (nose, eyes, ears), we filter out most false detections.</p>
+<p class='spacer'></p>
+<h3>10.4 Parallel Model Execution</h3>
+<p class='spacer'></p>
+<pre class="code-block python"><code>seg_results, pose_results = await asyncio.gather(
+    asyncio.to_thread(_run_seg),
+    asyncio.to_thread(_run_pose),
+)</code></pre>
+<p class='spacer'></p>
+<p><strong>What this does:</strong> Runs both AI models at the same time on separate CPU threads. Without this, they'd run one after another, doubling the processing time.</p>
+<p class='spacer'></p>
+<p><strong>asyncio.to_thread()</strong> moves CPU-heavy work (AI inference) to a background thread so it doesn't block the web server from handling requests.</p>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>11. How to Run the Project</h2>
+<p class='spacer'></p>
+<h3>Prerequisites</h3>
+<ul>
+<li>Python 3.9+</li>
+<li>A webcam (or use the included test video)</li>
+</ul>
+<p class='spacer'></p>
+<h3>Step-by-Step</h3>
+<p class='spacer'></p>
+<pre class="code-block bash"><code># 1. Navigate to the project
+cd Mini-project/backend
+
+# 2. Create virtual environment (first time only)
+python3 -m venv venv
+
+# 3. Activate virtual environment
+source venv/bin/activate        # macOS/Linux
+# venv\Scripts\activate         # Windows
+
+# 4. Install dependencies (first time only)
+pip install -r requirements.txt
+
+# 5. Start the server
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+# 6. Open browser
+# Go to: http://localhost:8000</code></pre>
+<p class='spacer'></p>
+<h3>To Stop the Server</h3>
+<p>Press <code>Ctrl + C</code> in the terminal. This triggers the FastAPI lifespan shutdown, which:</p>
+<ol>
+<li>Cancels the inference loop</li>
+<li>Cancels the broadcast loop</li>
+<li>Releases the camera (<code>cap.release()</code>)</li>
+</ol>
+<p class='spacer'></p>
+<h3>To Switch Between Webcam and Video File</h3>
+<p>In <code>main.py</code>, line 35:</p>
+<pre class="code-block python"><code>VIDEO_SOURCE = 0              # Use webcam
+VIDEO_SOURCE = "329307.mp4"   # Use test video file</code></pre>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>12. Feature Summary</h2>
+<p class='spacer'></p>
+<div class="table-container"><table>
+<thead><tr><th>#</th><th>Feature</th><th>Technology</th></tr></thead><tbody>
+<tr><td>1</td><td>Real-time person detection</td><td>YOLOv8-Pose</td></tr>
+<tr><td>2</td><td>Body silhouette visualization</td><td>YOLOv8-Seg</td></tr>
+<tr><td>3</td><td>Seat zone calibration (draw on video)</td><td>HTML Canvas + JS</td></tr>
+<tr><td>4</td><td>Real-time WebSocket updates (1/sec)</td><td>FastAPI WebSocket</td></tr>
+<tr><td>5</td><td>Live MJPEG video streaming</td><td>FastAPI StreamingResponse</td></tr>
+<tr><td>6</td><td>SVG ring progress chart</td><td>SVG + CSS animation</td></tr>
+<tr><td>7</td><td>Individual seat status chips</td><td>JavaScript DOM manipulation</td></tr>
+<tr><td>8</td><td>Capacity bar with color coding</td><td>CSS transitions</td></tr>
+<tr><td>9</td><td>Status pill (Available/Nearing/Full)</td><td>JavaScript logic</td></tr>
+<tr><td>10</td><td>Auto-reconnect on disconnect</td><td>JavaScript setTimeout</td></tr>
+<tr><td>11</td><td>Temporal smoothing (anti-flicker)</td><td>Python timestamp logic</td></tr>
+<tr><td>12</td><td>Exclusive seat assignment</td><td>Python greedy algorithm</td></tr>
+<tr><td>13</td><td>Person contour merging</td><td>Union-Find algorithm</td></tr>
+<tr><td>14</td><td>Persistent seat storage</td><td>JSON file I/O</td></tr>
+<tr><td>15</td><td>Responsive design (mobile-friendly)</td><td>CSS Grid + Media Queries</td></tr>
+<tr><td>16</td><td>Live clock and date display</td><td>JavaScript setInterval</td></tr>
+<tr><td>17</td><td>Head keypoint verification</td><td>COCO keypoint filtering</td></tr>
+<tr><td>18</td><td>Parallel model execution</td><td>asyncio.gather + threading</td></tr>
+</tbody></table></div>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>13. Limitations &amp; Future Scope</h2>
+<p class='spacer'></p>
+<h3>Current Limitations</h3>
+<ol>
+<li><strong>Single camera</strong> — Only monitors one room/angle</li>
+<li><strong>Lighting dependent</strong> — Poor lighting reduces detection accuracy</li>
+<li><strong>No authentication</strong> — Anyone on the network can access the dashboard</li>
+<li><strong>No database</strong> — No historical data storage (only real-time)</li>
+<li><strong>CPU-bound</strong> — Runs on CPU; GPU would be faster</li>
+</ol>
+<p class='spacer'></p>
+<h3>Future Scope</h3>
+<ol>
+<li><strong>Multi-camera support</strong> — Monitor multiple rooms</li>
+<li><strong>Mobile app</strong> — Native Android/iOS app with push notifications</li>
+<li><strong>Historical analytics</strong> — Track occupancy trends over hours/days/weeks</li>
+<li><strong>Booking system</strong> — Allow students to reserve seats</li>
+<li><strong>GPU acceleration</strong> — Use CUDA for faster inference</li>
+<li><strong>User authentication</strong> — Login system for admins</li>
+<li><strong>Cloud deployment</strong> — Host on AWS/GCP for remote access</li>
+<li><strong>Email/SMS alerts</strong> — Notify when capacity reaches threshold</li>
+</ol>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h2>14. Viva Questions &amp; Answers</h2>
+<p class='spacer'></p>
+<h3>Category 1: Project Overview</h3>
+<p class='spacer'></p>
+<p><strong>Q1: What is this project about?</strong></p>
+<p>A: It's an AI-powered system that uses a camera and YOLOv8 deep learning models to detect which library seats are occupied in real-time and displays the results on a web dashboard.</p>
+<p class='spacer'></p>
+<p><strong>Q2: What problem does it solve?</strong></p>
+<p>A: Students waste time walking around the library looking for empty seats. This system lets them check seat availability from their phone/laptop before going.</p>
+<p class='spacer'></p>
+<p><strong>Q3: What are the main technologies used?</strong></p>
+<p>A: Python, FastAPI (web server), YOLOv8 (AI object detection), OpenCV (video processing), and plain HTML/CSS/JavaScript (frontend dashboard).</p>
+<p class='spacer'></p>
+<p><strong>Q4: How many servers does this project need?</strong></p>
+<p>A: Just one. FastAPI serves both the API endpoints (video, WebSocket, seat management) AND the frontend HTML/CSS/JS files. One command starts everything.</p>
+<p class='spacer'></p>
+<p><strong>Q5: How is this different from using sensors on each seat?</strong></p>
+<p>A: Sensors require physical hardware on every seat (expensive, maintenance-heavy). Our solution uses a single camera and software — much cheaper and easier to deploy.</p>
+<p class='spacer'></p>
+<h3>Category 2: FastAPI &amp; Backend</h3>
+<p class='spacer'></p>
+<p><strong>Q6: What is FastAPI?</strong></p>
+<p>A: FastAPI is a modern, high-performance Python web framework for building APIs. It supports async operations, WebSockets, automatic data validation, and static file serving.</p>
+<p class='spacer'></p>
+<p><strong>Q7: Why FastAPI instead of Flask or Django?</strong></p>
+<p>A: FastAPI has built-in async support (critical for video streaming + WebSocket + AI running simultaneously), built-in WebSocket support, automatic request validation with Pydantic, and is significantly faster than Flask/Django.</p>
+<p class='spacer'></p>
+<p><strong>Q8: What is an API?</strong></p>
+<p>A: API (Application Programming Interface) is a way for software programs to communicate. Our API lets the browser request video feeds (<code>/video_feed</code>), occupancy data (<code>/occupancy</code>), and seat configurations (<code>/seats</code>).</p>
+<p class='spacer'></p>
+<p><strong>Q9: What is Uvicorn?</strong></p>
+<p>A: Uvicorn is an ASGI server that runs the FastAPI application. It listens on port 8000 for incoming requests and routes them to FastAPI. Think of it as the "engine" that powers the web server.</p>
+<p class='spacer'></p>
+<p><strong>Q10: What is ASGI?</strong></p>
+<p>A: ASGI (Asynchronous Server Gateway Interface) is a standard for Python async web servers. It replaced the older WSGI standard which couldn't handle WebSockets or async operations.</p>
+<p class='spacer'></p>
+<p><strong>Q11: What does <code>--reload</code> flag do in uvicorn?</strong></p>
+<p>A: It watches for file changes and automatically restarts the server. Useful during development — you don't have to manually stop and restart after each code change.</p>
+<p class='spacer'></p>
+<p><strong>Q12: What does <code>--host 0.0.0.0</code> mean?</strong></p>
+<p>A: It tells the server to listen on all network interfaces, so other devices on the same WiFi can access it. Without it, only <code>localhost</code> (the same computer) can connect.</p>
+<p class='spacer'></p>
+<p><strong>Q13: What is the lifespan function?</strong></p>
+<p>A: It's FastAPI's way of running code on server startup and shutdown. We use it to start the inference and broadcast background tasks on startup, and cancel them on shutdown.</p>
+<p class='spacer'></p>
+<p><strong>Q14: What is CORS and why is it needed?</strong></p>
+<p>A: CORS (Cross-Origin Resource Sharing) is a browser security feature that blocks requests between different domains. We enable it so the frontend (even if served from a different origin during development) can call our API.</p>
+<p class='spacer'></p>
+<p><strong>Q15: How are seat zones persisted?</strong></p>
+<p>A: They're saved as a JSON file (<code>seats.json</code>). When seats are created/modified via the calibrator, a <code>POST /seats</code> request saves them to disk. On server restart, <code>_load_seats()</code> reads them back.</p>
+<p class='spacer'></p>
+<h3>Category 3: AI &amp; YOLOv8</h3>
+<p class='spacer'></p>
+<p><strong>Q16: What is YOLO?</strong></p>
+<p>A: YOLO (You Only Look Once) is a real-time object detection algorithm. It processes an entire image in a single forward pass through a neural network, making it very fast compared to older multi-pass approaches.</p>
+<p class='spacer'></p>
+<p><strong>Q17: Why YOLOv8 specifically?</strong></p>
+<p>A: YOLOv8 (by Ultralytics) offers multiple task variants (detection, pose, segmentation) in a single framework, is state-of-the-art in accuracy, and is very easy to use with just 2 lines of Python code.</p>
+<p class='spacer'></p>
+<p><strong>Q18: What does the "n" in yolov8n mean?</strong></p>
+<p>A: "Nano" — the smallest and fastest model variant. Other sizes are s(mall), m(edium), l(arge), x(tra-large). We use nano because real-time speed matters more than maximum accuracy.</p>
+<p class='spacer'></p>
+<p><strong>Q19: Why do you use TWO models?</strong></p>
+<p>A: The Pose model detects body keypoints (head, shoulders) — we use these for accurate seat detection. The Segmentation model creates body outlines — we use these for visual display on the video. They serve different purposes.</p>
+<p class='spacer'></p>
+<p><strong>Q20: What is the COCO dataset?</strong></p>
+<p>A: COCO (Common Objects in Context) is a large-scale dataset with 330,000+ images and 80 object classes. YOLOv8 is pre-trained on COCO, so it already knows how to detect "person" out of the box.</p>
+<p class='spacer'></p>
+<p><strong>Q21: What are keypoints in pose detection?</strong></p>
+<p>A: Keypoints are specific body landmarks — the COCO format defines 17: nose, eyes, ears, shoulders, elbows, wrists, hips, knees, ankles. Each keypoint has an (x, y) position and confidence score.</p>
+<p class='spacer'></p>
+<p><strong>Q22: Why do you only use head+shoulder keypoints for seat detection?</strong></p>
+<p>A: Hands, elbows, and feet can extend into neighboring seats. The head and shoulders stay above the actual seat, making them the most reliable indicator of where someone is sitting.</p>
+<p class='spacer'></p>
+<p><strong>Q23: What is NMS (Non-Maximum Suppression)?</strong></p>
+<p>A: An algorithm that removes duplicate detections. If the model detects the same person 3 times with overlapping boxes, NMS keeps only the highest-confidence one and removes the rest.</p>
+<p class='spacer'></p>
+<p><strong>Q24: What is IoU?</strong></p>
+<p>A: Intersection over Union — a metric for measuring overlap between two bounding boxes. IoU = overlap area ÷ combined area. Values range from 0 (no overlap) to 1 (perfect overlap).</p>
+<p class='spacer'></p>
+<p><strong>Q25: What is a confidence threshold?</strong></p>
+<p>A: The minimum confidence score (0 to 1) for accepting a detection. Our pose model uses 0.45 — detections below 45% confidence are discarded as likely false positives.</p>
+<p class='spacer'></p>
+<p><strong>Q26: What is segmentation vs detection?</strong></p>
+<p>A: Detection gives a bounding box (rectangle around the object). Segmentation gives a pixel-perfect mask (exactly which pixels belong to the object). Segmentation is more precise but computationally heavier.</p>
+<p class='spacer'></p>
+<p><strong>Q27: Can this work with other AI models?</strong></p>
+<p>A: Yes. The architecture is model-agnostic. You could swap YOLOv8 for any detection model (like EfficientDet, DETR) as long as it outputs bounding boxes or keypoints.</p>
+<p class='spacer'></p>
+<h3>Category 4: Computer Vision &amp; OpenCV</h3>
+<p class='spacer'></p>
+<p><strong>Q28: What is OpenCV?</strong></p>
+<p>A: Open Source Computer Vision Library — the industry-standard library for image/video processing. We use it for camera capture, drawing overlays, encoding JPEG, and creating segmentation masks.</p>
+<p class='spacer'></p>
+<p><strong>Q29: How does the MJPEG stream work?</strong></p>
+<p>A: The server sends an endless stream of JPEG images with special headers (<code>multipart/x-mixed-replace</code>). The browser's <code>&lt;img&gt;</code> tag understands this format and continuously displays each new frame.</p>
+<p class='spacer'></p>
+<p><strong>Q30: What does <code>cv2.imencode</code> do?</strong></p>
+<p>A: Converts a NumPy image array into JPEG bytes. We use it to convert each annotated frame into a format the browser can display.</p>
+<p class='spacer'></p>
+<p><strong>Q31: What is <code>cv2.addWeighted</code>?</strong></p>
+<p>A: Blends two images together with transparency. We use it to create semi-transparent seat zone overlays (25% opacity) and body silhouette fills (15% opacity).</p>
+<p class='spacer'></p>
+<p><strong>Q32: How are seat zones drawn on the video?</strong></p>
+<p>A: Using OpenCV drawing functions — <code>cv2.rectangle()</code> for seat boxes, <code>cv2.putText()</code> for labels, and <code>cv2.fillPoly()</code> for body silhouettes. These are drawn on a copy of the frame before encoding to JPEG.</p>
+<p class='spacer'></p>
+<h3>Category 5: Frontend &amp; JavaScript</h3>
+<p class='spacer'></p>
+<p><strong>Q33: How does the frontend get real-time data?</strong></p>
+<p>A: Through WebSocket. When the page loads, JavaScript opens a persistent WebSocket connection to <code>ws://localhost:8000/ws</code>. The server pushes occupancy data (JSON) every second. JavaScript parses it and updates all UI elements.</p>
+<p class='spacer'></p>
+<p><strong>Q34: What is the difference between HTTP and WebSocket?</strong></p>
+<p>A: HTTP is request-response (client asks, server answers, connection closes). WebSocket is persistent bidirectional (connection stays open, server can push data anytime without being asked).</p>
+<p class='spacer'></p>
+<p><strong>Q35: How does the ring progress chart work?</strong></p>
+<p>A: It's an SVG circle with <code>stroke-dasharray</code> (total circumference = 471.24px) and <code>stroke-dashoffset</code>. To show 60% filled: offset = 471.24 × 0.4 = 188.5. CSS transitions animate the change smoothly.</p>
+<p class='spacer'></p>
+<p><strong>Q36: How does the seat calibrator work?</strong></p>
+<p>A: An HTML5 Canvas element is overlaid on the video. Mouse events (mousedown, mousemove, mouseup) track drag gestures. Coordinates are normalized to 0-1 fractions. On mouseup, a seat definition is created and sent to the backend via <code>POST /seats</code>.</p>
+<p class='spacer'></p>
+<p><strong>Q37: What is <code>document.getElementById()</code>?</strong></p>
+<p>A: A JavaScript method that finds an HTML element by its <code>id</code> attribute. We use it to get references to elements we need to update (like the clock, badge, counts, etc.).</p>
+<p class='spacer'></p>
+<p><strong>Q38: What does <code>JSON.parse()</code> do?</strong></p>
+<p>A: Converts a JSON string (text) into a JavaScript object that we can access with dot notation. Example: <code>JSON.parse('{"name":"Seat 1"}')</code> → <code>{name: "Seat 1"}</code>.</p>
+<p class='spacer'></p>
+<p><strong>Q39: What is <code>fetch()</code> in JavaScript?</strong></p>
+<p>A: A built-in browser function for making HTTP requests. We use it to save seats (<code>POST /seats</code>) and load seats (<code>GET /seats</code>) from the backend.</p>
+<p class='spacer'></p>
+<p><strong>Q40: How does auto-reconnect work?</strong></p>
+<p>A: When the WebSocket connection closes (<code>ws.onclose</code>), we use <code>setTimeout(connectWebSocket, 3000)</code> to try reconnecting after 3 seconds. This repeats until the connection succeeds.</p>
+<p class='spacer'></p>
+<p><strong>Q41: Why plain HTML/CSS/JS instead of React?</strong></p>
+<p>A: For a single-page college project, plain web technologies are sufficient and much simpler — no npm, no build tools, no framework installation. The examiner can read every line directly. React would be overkill here.</p>
+<p class='spacer'></p>
+<h3>Category 6: Concurrency &amp; Threading</h3>
+<p class='spacer'></p>
+<p><strong>Q42: What is async/await?</strong></p>
+<p>A: A Python feature for concurrent programming. <code>async</code> defines a function that can be paused. <code>await</code> pauses execution until an operation completes, while allowing other async tasks to run during the wait.</p>
+<p class='spacer'></p>
+<p><strong>Q43: Why is async important for this project?</strong></p>
+<p>A: The server must handle multiple things simultaneously — serving video, processing AI inference, broadcasting WebSocket updates, and responding to HTTP requests. Without async, each operation would block all others.</p>
+<p class='spacer'></p>
+<p><strong>Q44: What is <code>asyncio.gather()</code>?</strong></p>
+<p>A: Runs multiple async tasks simultaneously and waits for all to complete. We use it to run both AI models (pose + seg) in parallel, cutting processing time nearly in half.</p>
+<p class='spacer'></p>
+<p><strong>Q45: What is <code>asyncio.to_thread()</code>?</strong></p>
+<p>A: Moves a blocking function (like AI inference) to a background thread so it doesn't block the async event loop. Without this, the web server would freeze during each AI inference.</p>
+<p class='spacer'></p>
+<p><strong>Q46: What is a threading.Lock?</strong></p>
+<p>A: A synchronization mechanism that prevents two threads from accessing shared data simultaneously. We have two locks: <code>_seat_lock</code> (protects seat zone data) and <code>_frame_lock</code> (protects the latest JPEG frame).</p>
+<p class='spacer'></p>
+<p><strong>Q47: What is a race condition?</strong></p>
+<p>A: A bug that occurs when two threads access shared data at the same time. Example: Thread A reads seat data while Thread B is halfway through modifying it → corrupted data. Locks prevent this.</p>
+<p class='spacer'></p>
+<h3>Category 7: Algorithms</h3>
+<p class='spacer'></p>
+<p><strong>Q48: What is temporal smoothing?</strong></p>
+<p>A: A technique to prevent rapid flickering. When a seat is detected as occupied, we "hold" that status for 2 seconds even if detection briefly fails. This smooths out momentary detection gaps.</p>
+<p class='spacer'></p>
+<p><strong>Q49: Explain the Union-Find algorithm.</strong></p>
+<p>A: Union-Find (Disjoint Set Union) efficiently groups elements into sets. Each element has a parent pointer. <code>Find(x)</code> follows parent pointers to the root. <code>Union(a,b)</code> merges two groups. We use it to merge split person detections. Time complexity: nearly O(1) per operation with path compression.</p>
+<p class='spacer'></p>
+<p><strong>Q50: What is path compression in Union-Find?</strong></p>
+<p>A: An optimization where, during <code>Find(x)</code>, we update each visited node to point directly to the root. This flattens the tree, making future lookups faster.</p>
+<p class='spacer'></p>
+<p><strong>Q51: Why exclusive seat assignment?</strong></p>
+<p>A: If a person sits between two seats, their bounding box overlaps both. Without exclusive assignment, both seats would incorrectly show as occupied. We assign each person to only their highest-overlap seat.</p>
+<p class='spacer'></p>
+<p><strong>Q52: How does normalized coordinate system work?</strong></p>
+<p>A: Instead of pixel coordinates (e.g., x=500), we store fractions (e.g., x=0.52 meaning 52% from the left). This makes seat zones resolution-independent — they work whether the video is 640×480 or 1920×1080.</p>
+<p class='spacer'></p>
+<h3>Category 8: Networking &amp; Protocols</h3>
+<p class='spacer'></p>
+<p><strong>Q53: What is HTTP?</strong></p>
+<p>A: HyperText Transfer Protocol — the standard protocol for web communication. Client sends a request (GET, POST, etc.), server sends a response. Each exchange is independent (stateless).</p>
+<p class='spacer'></p>
+<p><strong>Q54: What is a REST API?</strong></p>
+<p>A: REST (Representational State Transfer) is an architecture style for APIs. It uses standard HTTP methods: GET (read), POST (create), PUT (update), DELETE (remove). Our <code>/seats</code> endpoint follows REST conventions.</p>
+<p class='spacer'></p>
+<p><strong>Q55: What is JSON?</strong></p>
+<p>A: JavaScript Object Notation — a lightweight data format for exchanging data. Uses key-value pairs: <code>{"name": "Seat 1", "occupied": true}</code>. Both Python and JavaScript can easily read/write JSON.</p>
+<p class='spacer'></p>
+<p><strong>Q56: What port is used and why?</strong></p>
+<p>A: Port 8000. A port is like a door number on a building (the server). Port 80 is default for HTTP, 443 for HTTPS, 8000 is commonly used for development servers. Multiple apps can run on the same machine using different ports.</p>
+<p class='spacer'></p>
+<p><strong>Q57: What does <code>localhost</code> mean?</strong></p>
+<p>A: It refers to the current computer itself (IP 127.0.0.1). When we access <code>http://localhost:8000</code>, the browser connects to the server running on the same machine.</p>
+<p class='spacer'></p>
+<h3>Category 9: Software Design Patterns</h3>
+<p class='spacer'></p>
+<p><strong>Q58: What design pattern does the WebSocket broadcasting use?</strong></p>
+<p>A: Observer/Publish-Subscribe pattern. The server maintains a set of subscribers (<code>connected_clients</code>). When new data is available, it publishes (broadcasts) to all subscribers.</p>
+<p class='spacer'></p>
+<p><strong>Q59: What is MVC architecture?</strong></p>
+<p>A: Model-View-Controller. Our project loosely follows this: Model = data structures (SeatZoneState, latest_occupancy), View = frontend (HTML/CSS/JS), Controller = API endpoints and inference loop.</p>
+<p class='spacer'></p>
+<p><strong>Q60: What is the Single Responsibility Principle in this project?</strong></p>
+<p>A: Each component has one job: <code>_inference_loop</code> handles AI detection, <code>_broadcast_loop</code> handles data distribution, <code>script.js</code> handles UI updates, <code>style.css</code> handles presentation. They're separate but work together.</p>
+<p class='spacer'></p>
+<h3>Category 10: Data Structures</h3>
+<p class='spacer'></p>
+<p><strong>Q61: What data structures are used?</strong></p>
+<p>A: Lists (seat_zones, person_contours), Sets (connected_clients, occupied_seat_ids), Dictionaries (latest_occupancy, seat_last_occupied), NumPy arrays (frames, masks), Union-Find (parent array).</p>
+<p class='spacer'></p>
+<p><strong>Q62: Why use a Set for connected_clients?</strong></p>
+<p>A: Sets provide O(1) add, remove, and membership check. We frequently add/remove WebSocket clients, and the <code>.discard()</code> method doesn't raise an error if the element isn't found.</p>
+<p class='spacer'></p>
+<p><strong>Q63: Why use a Dictionary for seat_last_occupied?</strong></p>
+<p>A: Dictionary provides O(1) lookup by seat ID. We need to quickly check when each seat was last seen as occupied — a dictionary maps seat_id → timestamp perfectly.</p>
+<p class='spacer'></p>
+<h3>Category 11: Testing &amp; Debugging</h3>
+<p class='spacer'></p>
+<p><strong>Q64: How would you test this system?</strong></p>
+<p>A: Use a pre-recorded video file (set <code>VIDEO_SOURCE = "329307.mp4"</code>) for consistent, repeatable testing. Draw seat zones over known positions. Verify occupancy matches what's visible in the video.</p>
+<p class='spacer'></p>
+<p><strong>Q65: How do you handle camera failure?</strong></p>
+<p>A: If <code>cap.read()</code> returns <code>False</code>, the code either loops the video file (by resetting to frame 0) or waits 0.5 seconds and retries (for a webcam that's temporarily unavailable).</p>
+<p class='spacer'></p>
+<p><strong>Q66: What happens if the WebSocket disconnects?</strong></p>
+<p>A: JavaScript auto-reconnects after 3 seconds. The UI badge shows "Offline". The server removes the stale client from <code>connected_clients</code> to avoid sending data to dead connections.</p>
+<p class='spacer'></p>
+<h3>Category 12: General / Counter Questions</h3>
+<p class='spacer'></p>
+<p><strong>Q67: What is a virtual environment and why use it?</strong></p>
+<p>A: A virtual environment (<code>venv</code>) is an isolated Python installation. Each project can have its own package versions without conflicts. Without it, installing packages for one project could break another.</p>
+<p class='spacer'></p>
+<p><strong>Q68: What is <code>requirements.txt</code>?</strong></p>
+<p>A: A file listing all Python packages the project needs, with version numbers. <code>pip install -r requirements.txt</code> installs them all. Ensures anyone can recreate the exact same environment.</p>
+<p class='spacer'></p>
+<p><strong>Q69: Can this system work at night / in low light?</strong></p>
+<p>A: It would need a camera with night vision (infrared). The AI model works on whatever the camera captures — if the image is too dark, detections will fail.</p>
+<p class='spacer'></p>
+<p><strong>Q70: What is the accuracy of YOLOv8n?</strong></p>
+<p>A: YOLOv8n achieves approximately 37.3% mAP (mean Average Precision) on the COCO dataset across all 80 classes. For person detection specifically, it's much higher (~60-70%) since people are a well-represented class.</p>
+<p class='spacer'></p>
+<p><strong>Q71: How many people can it track simultaneously?</strong></p>
+<p>A: There's no hard limit in the software. Practically, YOLOv8n can detect 20-30+ people per frame. The limiting factor is camera resolution and viewing angle — a single camera can realistically monitor 10-20 seats.</p>
+<p class='spacer'></p>
+<p><strong>Q72: What is Pydantic?</strong></p>
+<p>A: A Python library for data validation. When someone sends data to our API, Pydantic automatically checks if it matches the expected format (correct types, required fields). Invalid data is rejected with a clear error message.</p>
+<p class='spacer'></p>
+<p><strong>Q73: What is the <code>.pt</code> file extension?</strong></p>
+<p>A: PyTorch model file. It contains the trained neural network weights — millions of numbers that the model learned during training on the COCO dataset.</p>
+<p class='spacer'></p>
+<p><strong>Q74: What happens if no seats are defined?</strong></p>
+<p>A: The system still works — it detects people and shows the video feed. But occupancy counts show "0/0" and the status says "No Seats Defined". The calibrator allows defining seats at any time.</p>
+<p class='spacer'></p>
+<p><strong>Q75: Could this violate privacy?</strong></p>
+<p>A: Yes, video surveillance has privacy implications. In a real deployment, you should: post visible notices about CCTV, not store video recordings, only process frames in memory, and comply with local privacy laws.</p>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<blockquote><strong>Tip for Viva:</strong> Don't just memorize answers. Understand the WHY behind each decision. If asked something you don't know, say "That's beyond the current scope, but I would approach it by..." and show thinking ability.</blockquote>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<p><em>End of Document — Good luck with your presentation! 🎓</em></p>
+<p class='spacer'></p>
+</body>
+</html>

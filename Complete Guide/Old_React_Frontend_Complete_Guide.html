@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Library Seat Occupancy Tracker — Complete Project & Viva Guide</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 15mm 20mm 15mm;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2937;
+    background: #ffffff;
+    line-height: 1.6;
+    font-size: 13.5px;
+    padding: 20px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h1 {
+    color: #0f172a;
+    font-size: 26px;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 8px;
+    margin-top: 24px;
+    page-break-after: avoid;
+  }
+  h2 {
+    color: #1e3a8a;
+    font-size: 20px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 6px;
+    margin-top: 28px;
+    page-break-after: avoid;
+  }
+  h3 {
+    color: #1e40af;
+    font-size: 16px;
+    margin-top: 18px;
+    page-break-after: avoid;
+  }
+  h4 {
+    color: #374151;
+    font-size: 14px;
+    margin-top: 14px;
+    page-break-after: avoid;
+  }
+  p {
+    margin: 8px 0;
+  }
+  blockquote {
+    border-left: 4px solid #3b82f6;
+    background: #f8fafc;
+    padding: 8px 16px;
+    color: #475569;
+    margin: 12px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .code-block {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11.5px;
+    line-height: 1.45;
+    overflow-x: auto;
+    page-break-inside: avoid;
+    margin: 12px 0;
+  }
+  code {
+    background: #f1f5f9;
+    color: #b91c1c;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+  }
+  .code-block code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+  .table-container {
+    overflow-x: auto;
+    margin: 14px 0;
+    page-break-inside: avoid;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  th, td {
+    border: 1px solid #cbd5e1;
+    padding: 6px 10px;
+    text-align: left;
+  }
+  th {
+    background: #f1f5f9;
+    font-weight: 600;
+    color: #0f172a;
+  }
+  tr:nth-child(even) {
+    background: #f8fafc;
+  }
+  ul, ol {
+    padding-left: 24px;
+    margin: 8px 0;
+  }
+  li {
+    margin: 4px 0;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 24px 0;
+  }
+  strong {
+    color: #0f172a;
+  }
+  @media print {
+    body {
+      padding: 0;
+      font-size: 12px;
+    }
+    .code-block {
+      background: #f8fafc !important;
+      color: #0f172a !important;
+      border: 1px solid #cbd5e1;
+    }
+    h1, h2, h3 {
+      page-break-after: avoid;
+    }
+    table, blockquote, .code-block {
+      page-break-inside: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+<h1>AI Library Seat Occupancy Tracker</h1>
+<h2>Complete Project Documentation &amp; Viva Preparation Guide (React + Vite Frontend)</h2>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h1>Table of Contents</h1>
+<p class='spacer'></p>
+<ol>
+<li><a href="#1-project-overview">Project Overview</a></li>
+<li><a href="#2-problem-statement">Problem Statement</a></li>
+<li><a href="#3-objectives">Objectives</a></li>
+<li><a href="#4-technology-stack">Technology Stack</a></li>
+<li><a href="#5-system-architecture">System Architecture</a></li>
+<li><a href="#6-detailed-data-flow">Detailed Data Flow</a></li>
+<li><a href="#7-backend--deep-dive">Backend — Deep Dive</a></li>
+<li><a href="#8-frontend--deep-dive">Frontend — Deep Dive</a></li>
+<li><a href="#9-ai--machine-learning-component">AI / Machine Learning Component</a></li>
+<li><a href="#10-communication-protocols">Communication Protocols</a></li>
+<li><a href="#11-key-algorithms--techniques">Key Algorithms &amp; Techniques</a></li>
+<li><a href="#12-file-by-file-explanation">File-by-File Explanation</a></li>
+<li><a href="#13-how-to-run-the-project">How to Run the Project</a></li>
+<li><a href="#14-screenshots--ui-walkthrough">Screenshots / UI Walkthrough</a></li>
+<li><a href="#15-advantages--limitations">Advantages &amp; Limitations</a></li>
+<li><a href="#16-future-enhancements">Future Enhancements</a></li>
+<li><a href="#17-viva-questions--answers">Viva Questions &amp; Answers (50+)</a></li>
+<li><a href="#18-glossary-of-technical-terms">Glossary of Technical Terms</a></li>
+</ol>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h1>1. Project Overview</h1>
+<p class='spacer'></p>
+<p><strong>Project Title:</strong> AI Library Seat Occupancy Tracker</p>
+<p class='spacer'></p>
+<p><strong>In Simple Terms:</strong> This project uses a camera (webcam) and Artificial Intelligence to automatically detect how many seats in a library (or any room) are occupied and how many are vacant — in real-time. It shows a live dashboard on a web browser where anyone can see which seats are free without physically going to the library.</p>
+<p class='spacer'></p>
+<p><strong>How it works (the "elevator pitch"):</strong></p>
+<blockquote>A camera watches the library. An AI model (YOLOv8) runs on each video frame to detect people and their body outlines. The system checks which people are sitting inside pre-defined "seat zones" and marks those seats as occupied. This information is instantly pushed to a web dashboard over WebSocket, where users see a live video feed with colored seat overlays, an occupancy ring chart, and per-seat status chips — all updating in real-time.</blockquote>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h1>2. Problem Statement</h1>
+<p class='spacer'></p>
+<p>In college and public libraries:</p>
+<ul>
+<li>Students waste time walking to the library only to find no seats available.</li>
+<li>Library staff cannot easily track seat utilization for planning.</li>
+<li>Manual seat counting is inefficient, inaccurate, and not real-time.</li>
+</ul>
+<p class='spacer'></p>
+<p><strong>Solution:</strong> An automated, AI-powered, real-time seat occupancy monitoring system that requires only a standard webcam and a computer.</p>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h1>3. Objectives</h1>
+<p class='spacer'></p>
+<div class="table-container"><table>
+<thead><tr><th>#</th><th>Objective</th></tr></thead><tbody>
+<tr><td>1</td><td>Detect people in a camera feed using computer vision (YOLOv8).</td></tr>
+<tr><td>2</td><td>Map detected people to pre-defined seat zones to determine occupancy.</td></tr>
+<tr><td>3</td><td>Stream live video with occupancy overlays to a web dashboard.</td></tr>
+<tr><td>4</td><td>Provide real-time occupancy data via WebSocket for instant updates.</td></tr>
+<tr><td>5</td><td>Allow administrators to visually calibrate seat zones via a drag-and-draw interface.</td></tr>
+<tr><td>6</td><td>Minimize false positives through head-keypoint verification, temporal smoothing, and contour merging.</td></tr>
+</tbody></table></div>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h1>4. Technology Stack</h1>
+<p class='spacer'></p>
+<h2>4.1 Backend (Server + AI)</h2>
+<p class='spacer'></p>
+<div class="table-container"><table>
+<thead><tr><th>Technology</th><th>Purpose</th><th>Version</th></tr></thead><tbody>
+<tr><td><strong>Python</strong></td><td>Main programming language</td><td>3.10+</td></tr>
+<tr><td><strong>FastAPI</strong></td><td>Web server framework (handles HTTP + WebSocket)</td><td>0.115.0</td></tr>
+<tr><td><strong>Uvicorn</strong></td><td>ASGI server to run FastAPI</td><td>0.30.6</td></tr>
+<tr><td><strong>YOLOv8 (Ultralytics)</strong></td><td>AI model for person detection, pose estimation, and segmentation</td><td>8.2.100</td></tr>
+<tr><td><strong>OpenCV</strong></td><td>Computer vision library — video capture, image processing, drawing</td><td>4.10.0</td></tr>
+<tr><td><strong>NumPy</strong></td><td>Numerical computation (array operations on images/masks)</td><td>(bundled)</td></tr>
+<tr><td><strong>Pydantic</strong></td><td>Data validation for API request/response models</td><td>(bundled with FastAPI)</td></tr>
+</tbody></table></div>
+<p class='spacer'></p>
+<h2>4.2 Frontend (User Interface)</h2>
+<p class='spacer'></p>
+<div class="table-container"><table>
+<thead><tr><th>Technology</th><th>Purpose</th><th>Version</th></tr></thead><tbody>
+<tr><td><strong>React</strong></td><td>UI component library</td><td>19.2.8</td></tr>
+<tr><td><strong>Vite</strong></td><td>Build tool and dev server (extremely fast)</td><td>8.2.2</td></tr>
+<tr><td><strong>Tailwind CSS</strong></td><td>Utility-first CSS framework</td><td>4.3.3</td></tr>
+<tr><td><strong>Lucide React</strong></td><td>Icon library for clean UI icons</td><td>1.42.0</td></tr>
+<tr><td><strong>Vanilla JavaScript</strong></td><td>WebSocket hook, custom logic</td><td>ES2022+</td></tr>
+</tbody></table></div>
+<p class='spacer'></p>
+<h2>4.3 AI Models Used (Three YOLOv8 Model Files)</h2>
+<p class='spacer'></p>
+<div class="table-container"><table>
+<thead><tr><th>Model File</th><th>Type</th><th>Purpose</th><th>Size</th></tr></thead><tbody>
+<tr><td><code>yolov8n-pose.pt</code></td><td>Pose Estimation</td><td>Detects human body keypoints (nose, eyes, ears, shoulders) — used for <strong>seat detection logic</strong></td><td>~6.8 MB</td></tr>
+<tr><td><code>yolov8n-seg.pt</code></td><td>Instance Segmentation</td><td>Detects person body contours/silhouettes — used for <strong>visual overlays</strong> only</td><td>~7.0 MB</td></tr>
+<tr><td><code>yolov8n.pt</code></td><td>Object Detection</td><td>Standard detection model (available but not actively used in the main loop)</td><td>~6.5 MB</td></tr>
+</tbody></table></div>
+<p class='spacer'></p>
+<blockquote><strong>Key Design Decision:</strong> The project uses <strong>two models simultaneously</strong> — the pose model for accurate seat matching (using head/shoulder keypoints) and the segmentation model purely for drawing beautiful body silhouettes on the video stream.</blockquote>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h1>5. System Architecture</h1>
+<p class='spacer'></p>
+<pre class="code-block mermaid"><code>graph TB
+    subgraph Hardware
+        CAM["📷 Webcam / Camera"]
+    end
+
+    subgraph Backend["Backend Server (Python + FastAPI)"]
+        INF["Inference Loop&lt;br/&gt;(YOLOv8 Pose + Seg)"]
+        OCC["Occupancy Calculator&lt;br/&gt;(Overlap + Smoothing)"]
+        BRD["Broadcast Loop&lt;br/&gt;(WebSocket)"]
+        API["REST API&lt;br/&gt;(/seats, /health, /occupancy)"]
+        MJPEG["MJPEG Stream&lt;br/&gt;(/video_feed)"]
+        STORE["seats.json&lt;br/&gt;(Persistence)"]
+    end
+
+    subgraph Frontend["Frontend (React + Vite)"]
+        DASH["Dashboard&lt;br/&gt;(Ring Chart + Stats)"]
+        VID["Live Video Feed&lt;br/&gt;(MJPEG Stream)"]
+        CALIB["Seat Calibrator&lt;br/&gt;(Drag-to-Draw)"]
+        WSHOOK["WebSocket Hook&lt;br/&gt;(Auto-reconnect)"]
+    end
+
+    CAM --&gt;|"Video Frames"| INF
+    INF --&gt;|"Detections"| OCC
+    OCC --&gt;|"Seat States"| BRD
+    OCC --&gt;|"Annotated Frame"| MJPEG
+    BRD --&gt;|"JSON over WS"| WSHOOK
+    WSHOOK --&gt;|"Occupancy Data"| DASH
+    MJPEG --&gt;|"MJPEG Stream"| VID
+    API &lt;--&gt;|"Seat Definitions"| CALIB
+    API &lt;--&gt;|"Read/Write"| STORE</code></pre>
+<p class='spacer'></p>
+<h2>Architecture Type: <strong>Client-Server with Real-Time Streaming</strong></h2>
+<p class='spacer'></p>
+<div class="table-container"><table>
+<thead><tr><th>Layer</th><th>Role</th></tr></thead><tbody>
+<tr><td><strong>Hardware Layer</strong></td><td>Webcam captures video frames</td></tr>
+<tr><td><strong>AI Processing Layer</strong></td><td>YOLOv8 models run inference on each frame</td></tr>
+<tr><td><strong>Application Logic Layer</strong></td><td>FastAPI handles occupancy calculation, seat management, and broadcasting</td></tr>
+<tr><td><strong>Communication Layer</strong></td><td>WebSocket (for real-time data) + MJPEG (for video) + REST API (for CRUD operations)</td></tr>
+<tr><td><strong>Presentation Layer</strong></td><td>React dashboard displays everything in a polished UI</td></tr>
+</tbody></table></div>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h1>6. Detailed Data Flow</h1>
+<p class='spacer'></p>
+<pre class="code-block mermaid"><code>sequenceDiagram
+    participant Camera
+    participant InferenceLoop
+    participant PoseModel as YOLOv8-Pose
+    participant SegModel as YOLOv8-Seg
+    participant OccCalc as Occupancy Calculator
+    participant WebSocket as WebSocket Broadcast
+    participant MJPEG as MJPEG Streamer
+    participant Browser as User's Browser
+
+    Camera-&gt;&gt;InferenceLoop: Capture frame (640×480)
+    
+    par Run Both Models in Parallel
+        InferenceLoop-&gt;&gt;PoseModel: Predict keypoints
+        PoseModel--&gt;&gt;InferenceLoop: Keypoints + bounding boxes
+    and
+        InferenceLoop-&gt;&gt;SegModel: Predict segmentation masks
+        SegModel--&gt;&gt;InferenceLoop: Body contour polygons
+    end
+
+    InferenceLoop-&gt;&gt;OccCalc: Torso bboxes + contours
+    
+    Note over OccCalc: 1. Head-keypoint verification&lt;br/&gt;2. Build torso bounding box&lt;br/&gt;3. Match person → best seat zone&lt;br/&gt;4. Apply temporal smoothing
+
+    OccCalc-&gt;&gt;InferenceLoop: Seat occupancy states
+
+    InferenceLoop-&gt;&gt;MJPEG: Annotated JPEG frame&lt;br/&gt;(with colored overlays)
+    InferenceLoop-&gt;&gt;WebSocket: JSON occupancy payload
+
+    par Deliver to Browser
+        MJPEG-&gt;&gt;Browser: Continuous JPEG stream
+    and
+        WebSocket-&gt;&gt;Browser: JSON data every 1 second
+    end
+
+    Note over Browser: Dashboard renders:&lt;br/&gt;• Live video with overlays&lt;br/&gt;• Ring chart + stats&lt;br/&gt;• Seat chips (green/red)</code></pre>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h1>7. Backend — Deep Dive</h1>
+<p class='spacer'></p>
+<p>The backend lives in <a href="file:///Users/_citrus.sunrise/Documents/COLLEGE/Mini-project/backend/main.py">main.py</a>:</p>
+<p class='spacer'></p>
+<h2>7.1 Configuration Constants</h2>
+<ul>
+<li><code>VIDEO_SOURCE</code>: default webcam index <code>0</code> or test video path.</li>
+<li><code>CONFIDENCE_THRESHOLD</code>: 0.45.</li>
+<li><code>SEG_CONFIDENCE_THRESHOLD</code>: 0.30.</li>
+<li><code>NMS_IOU_THRESHOLD</code>: 0.4.</li>
+<li><code>HEAD_KP_CONFIDENCE</code>: 0.3; <code>MIN_HEAD_KPS</code>: 2.</li>
+<li><code>OVERLAP_THRESHOLD</code>: 0.15; <code>OCCUPANCY_HOLD_SECONDS</code>: 2.0.</li>
+</ul>
+<p class='spacer'></p>
+<h2>7.2 Data Models</h2>
+<p><code>SeatZoneIn</code>: normalized rectangle coordinates (<code>x1</code>, <code>y1</code>, <code>x2</code>, <code>y2</code>).</p>
+<p><code>SeatZoneState</code>: runtime state tracking <code>occupied</code>.</p>
+<p class='spacer'></p>
+<h2>7.3 Endpoints</h2>
+<ul>
+<li><code>GET /health</code>: Health status.</li>
+<li><code>GET /seats</code>, <code>POST /seats</code>, <code>DELETE /seats/{id}</code>: REST CRUD operations for seat zones.</li>
+<li><code>GET /video_feed</code>: MJPEG stream.</li>
+<li><code>GET /occupancy</code>: Snapshot of current occupancy.</li>
+<li><code>WS /ws</code>: WebSocket real-time push.</li>
+</ul>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h1>8. Frontend — Deep Dive (React + Vite)</h1>
+<p class='spacer'></p>
+<h2>8.1 Structure</h2>
+<ul>
+<li><code>Dashboard.jsx</code>: Overall layout, ring progress, seat status chips, video feed container.</li>
+<li><code>SeatCalibrator.jsx</code>: HTML Canvas overlay enabling drag-and-draw bounding box calibration directly over the live video.</li>
+<li><code>useOccupancySocket.js</code>: Custom WebSocket hook with auto-reconnection every 3 seconds.</li>
+<li><code>vite.config.js</code>: Proxies <code>/ws</code>, <code>/video_feed</code>, and <code>/seats</code> to port 8000 during local development.</li>
+</ul>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h1>9. Key Algorithms &amp; Techniques</h1>
+<p class='spacer'></p>
+<ol>
+<li><strong>Head-Keypoint Verification:</strong> Requires at least 2 visible head keypoints (0-4) with confidence &gt; 0.3 to discard inanimate objects.</li>
+<li><strong>Torso Bounding Box:</strong> Bounded exclusively by head and shoulder keypoints (0-6) with 15% padding, excluding limbs.</li>
+<li><strong>Best-Match Greedy Assignment:</strong> Each person is mapped exclusively to at most one seat with the highest overlap ratio.</li>
+<li><strong>Temporal Smoothing:</strong> Holds an occupied status for 2.0 seconds after detection loss to prevent UI flickering.</li>
+<li><strong>Union-Find Contour Merging:</strong> Merges fragmented segmentation contours into a single convex hull.</li>
+</ol>
+<p class='spacer'></p>
+<hr/>
+<p class='spacer'></p>
+<h1>10. Viva Q&amp;A Highlights (React Version)</h1>
+<p class='spacer'></p>
+<ul>
+<li><strong>Q: Why use React + Vite?</strong></li>
+</ul>
+<p><strong>A:</strong> React provides reactive state-driven rendering and component modularity. Vite provides lightning-fast Hot Module Replacement (HMR).</p>
+<ul>
+<li><strong>Q: How does the calibrator work?</strong></li>
+</ul>
+<p><strong>A:</strong> An HTML Canvas overlays the live video. Mouse events (<code>mousedown</code>, <code>mousemove</code>, <code>mouseup</code>) capture normalized coordinates that are saved to <code>seats.json</code> via <code>POST /seats</code>.</p>
+<ul>
+<li><strong>Q: Why do we need a dev proxy in Vite?</strong></li>
+</ul>
+<p><strong>A:</strong> Vite runs on port 5173 while FastAPI runs on 8000. The proxy routes <code>/ws</code> and <code>/video_feed</code> requests to port 8000 seamlessly, avoiding cross-origin issues during development.</p>
+<p class='spacer'></p>
+</body>
+</html>
